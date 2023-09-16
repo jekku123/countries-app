@@ -1,4 +1,4 @@
-import { Box, Container, Grid } from "@mui/material"
+import { Box, Container, Grid, Skeleton } from "@mui/material"
 import { useState } from "react"
 import CountryCard from "../components/CountryCard"
 import SearchSelect from "../components/SearchSelect"
@@ -21,7 +21,6 @@ export default function Countries() {
       }, [])
     : []
 
-  if (isLoading) return <div>Loading...</div>
   if (error) return <h2>Sorry, there was an error</h2>
 
   return (
@@ -30,9 +29,27 @@ export default function Countries() {
         <SearchSelect countries={countries} handleSearch={handleSearch} />
       </Box>
       <Grid container spacing={5} px="20px">
-        {filteredCountries?.map((country) => (
-          <CountryCard key={country.name.common} country={country} />
-        ))}
+        {!isLoading ? (
+          <>
+            {filteredCountries?.map((country) => (
+              <Grid key={country.name.common} item xs={12} sm={6} md={4}>
+                <CountryCard country={country} />
+              </Grid>
+            ))}
+          </>
+        ) : (
+          Array.from(new Array(6)).map((_, i) => (
+            <Grid key={i} item xs={12} sm={6} md={4}>
+              <Skeleton
+                sx={{ borderRadius: "5px" }}
+                variant="rectangular"
+                width="100%"
+                height={"20rem"}
+                animation="wave"
+              />
+            </Grid>
+          ))
+        )}
       </Grid>
     </Container>
   )

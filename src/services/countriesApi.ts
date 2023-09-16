@@ -1,5 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
+const BASE_URL = "https://restcountries.com/v3.1/"
+
 export interface ICountry {
   name: {
     common: string
@@ -10,11 +12,17 @@ export interface ICountry {
   }
   population: number
   capital: string[]
+  currencies: {
+    [key: string]: {
+      name: string
+      symbol: string
+    }
+  }
 }
 
 export const countriesApi = createApi({
   reducerPath: "countriesApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://restcountries.com/v3.1/" }),
+  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: (builder) => ({
     getCountries: builder.query<ICountry[], void>({
       query: () => `all`,
