@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 export default function Home() {
   return (
     <Container sx={{ marginY: 5 }} maxWidth="md">
-      <Typography variant="h4" component="h2" marginTop={5} marginBottom={3}>
+      <Typography variant="h2" component="h2" marginTop={5} marginBottom={3}>
         Countries app is a simple React application made in Business College
         Helsinki lessons.
       </Typography>
@@ -15,7 +15,7 @@ export default function Home() {
         <MuiLink
           component={Link}
           to="https://restcountries.com/"
-          underline="hover"
+          rel="noreferrer"
           target="_blank"
         >
           https://restcountries.com/
@@ -25,7 +25,8 @@ export default function Home() {
         <MuiLink
           component={Link}
           to="https://openweathermap.org/"
-          underline="hover"
+          rel="noreferrer"
+          target="_blank"
         >
           https://openweathermap.org/
         </MuiLink>
