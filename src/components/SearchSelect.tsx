@@ -38,7 +38,7 @@ export default function SearchSelect({
       renderInput={(params) => (
         <TextField
           {...params}
-          label="Choose a country"
+          label="Search for a country"
           inputProps={{
             ...params.inputProps,
             autoComplete: "new-password",

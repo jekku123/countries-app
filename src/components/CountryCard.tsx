@@ -1,4 +1,9 @@
-import { CreditCard, LocationCity, People } from "@mui/icons-material"
+import {
+  CreditCard,
+  FavoriteBorder,
+  LocationCity,
+  People,
+} from "@mui/icons-material"
 import { Box, CardActionArea } from "@mui/material"
 import Card from "@mui/material/Card"
 import CardContent from "@mui/material/CardContent"
@@ -38,9 +43,18 @@ export default function CountryCard({ country }: CountryCardProps) {
           alt={country.name.common}
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {country.name.common}
-          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Typography gutterBottom variant="h5" component="h2">
+              {country.name.common}
+            </Typography>
+            <FavoriteBorder fontSize="large" />
+          </Box>
           <Typography
             gutterBottom
             variant="body1"
