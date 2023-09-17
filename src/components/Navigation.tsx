@@ -19,7 +19,6 @@ interface NavigationProps {
 const navItems = [
   { label: "Home", to: "/" },
   { label: "Countries", to: "/countries" },
-  { label: "Favorites", to: "/favorites" },
 ]
 
 export default function Navigation({

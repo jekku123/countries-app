@@ -5,7 +5,7 @@ import SearchSelect from "../components/SearchSelect"
 import { SkeletonGrid } from "../components/SkeletonGrid"
 import { ICountry, useGetCountriesQuery } from "../services/countriesApi"
 
-export default function Countries() {
+export default function CountriesList() {
   const { data: countries, isLoading, error } = useGetCountriesQuery()
   const [search, setSearch] = useState("")
 
