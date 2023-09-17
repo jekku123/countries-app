@@ -2,21 +2,15 @@ import MenuIcon from "@mui/icons-material/Menu"
 import {
   AppBar,
   Box,
-  Button,
   Container,
   IconButton,
   Toolbar,
   Typography,
 } from "@mui/material"
 import { useState } from "react"
-import { Link, NavLink } from "react-router-dom"
-import MobileMenu from "./MobileMenu"
+import { Link } from "react-router-dom"
+import Navigation from "./Navigation"
 import ThemeToggler from "./ThemeToggler"
-
-const navItems = [
-  { label: "Home", to: "/" },
-  { label: "Countries", to: "/countries" },
-]
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -26,7 +20,7 @@ export default function Header() {
   }
 
   return (
-    <header id="back-to-top-anchor">
+    <header>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Container>
@@ -43,7 +37,6 @@ export default function Header() {
               </IconButton>
               <Typography
                 variant="h6"
-                noWrap
                 component={Link}
                 to="/"
                 sx={{
@@ -59,16 +52,10 @@ export default function Header() {
                   display: { xs: "none", sm: "block", flexGrow: 1 },
                 }}
               >
-                {navItems.map((item) => (
-                  <Button
-                    key={item.label}
-                    component={NavLink}
-                    to={item.to}
-                    sx={{ color: "#fff" }}
-                  >
-                    {item.label}
-                  </Button>
-                ))}
+                <Navigation
+                  handleDrawerToggle={handleDrawerToggle}
+                  mobileOpen={mobileOpen}
+                />
               </Box>
               <Box
                 sx={{
@@ -79,11 +66,6 @@ export default function Header() {
             </Toolbar>
           </Container>
         </AppBar>
-        <MobileMenu
-          handleDrawerToggle={handleDrawerToggle}
-          mobileOpen={mobileOpen}
-          navItems={navItems}
-        />
       </Box>
     </header>
   )

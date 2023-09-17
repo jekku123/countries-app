@@ -17,8 +17,9 @@ interface CountryCardProps {
 }
 
 export default function CountryCard({ country }: CountryCardProps) {
-  const population = new Intl.NumberFormat().format(country.population)
   const navigate = useNavigate()
+
+  const population = new Intl.NumberFormat().format(country.population)
 
   const handleCardClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,

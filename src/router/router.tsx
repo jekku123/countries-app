@@ -1,19 +1,19 @@
-import {
-  Route,
-  createBrowserRouter,
-  createRoutesFromElements,
-} from "react-router-dom"
+import { createBrowserRouter } from "react-router-dom"
 import Layout from "../Layout"
 import Countries from "../pages/Countries"
 import CountriesSingle from "../pages/CountriesSingle"
+import Favorites from "../pages/Favorites"
 import Home from "../pages/Home"
 
-export const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<Layout />}>
-      <Route path="/" element={<Home />} />
-      <Route path="/countries" element={<Countries />} />
-      <Route path="/countries/:single" element={<CountriesSingle />} />
-    </Route>,
-  ),
-)
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      { index: true, element: <Home /> },
+      { path: "/countries", element: <Countries /> },
+      { path: "/countries/:single", element: <CountriesSingle /> },
+      { path: "/favorites", element: <Favorites /> },
+    ],
+  },
+])
