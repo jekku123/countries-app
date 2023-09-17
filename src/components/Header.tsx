@@ -20,7 +20,7 @@ export default function Header() {
   }
 
   return (
-    <header id="back-to-top-anchor">
+    <header>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Container>
@@ -37,7 +37,6 @@ export default function Header() {
               </IconButton>
               <Typography
                 variant="h6"
-                noWrap
                 component={Link}
                 to="/"
                 sx={{

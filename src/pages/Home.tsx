@@ -1,5 +1,4 @@
-import { Box, Container, Link as MuiLink, Typography } from "@mui/material"
-import { Link } from "react-router-dom"
+import { Box, Container, Link, Typography } from "@mui/material"
 
 export default function Home() {
   return (
@@ -8,28 +7,26 @@ export default function Home() {
         Countries app is a simple React application made in Business College
         Helsinki lessons.
       </Typography>
+
       <Typography variant="h5" component="h3" marginTop={4} marginBottom={1}>
         App uses:
       </Typography>
-      <Box>
-        <MuiLink
-          component={Link}
-          to="https://restcountries.com/"
+
+      <Box sx={{ display: "flex", flexDirection: "column" }}>
+        <Link
+          href="https://restcountries.com/"
           rel="noreferrer"
           target="_blank"
         >
           https://restcountries.com/
-        </MuiLink>
-      </Box>
-      <Box>
-        <MuiLink
-          component={Link}
-          to="https://openweathermap.org/"
+        </Link>
+        <Link
+          href="https://openweathermap.org/"
           rel="noreferrer"
           target="_blank"
         >
           https://openweathermap.org/
-        </MuiLink>
+        </Link>
       </Box>
     </Container>
   )

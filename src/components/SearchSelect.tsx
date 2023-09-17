@@ -5,7 +5,10 @@ import { ICountry } from "../services/countriesApi"
 
 interface SearchSelectProps {
   countries?: ICountry[] | undefined
-  handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void
+  handleSearch: (
+    _e: React.SyntheticEvent<Element, Event>,
+    value: string,
+  ) => void
 }
 
 export default function SearchSelect({
@@ -18,6 +21,7 @@ export default function SearchSelect({
       sx={{ width: 300 }}
       options={countries}
       autoHighlight
+      onInputChange={handleSearch}
       getOptionLabel={(option) => option.name.common}
       renderOption={(props, option) => (
         <Box
@@ -43,7 +47,6 @@ export default function SearchSelect({
             ...params.inputProps,
             autoComplete: "new-password",
           }}
-          onChange={handleSearch}
         />
       )}
     />
