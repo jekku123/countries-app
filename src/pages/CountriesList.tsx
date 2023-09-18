@@ -1,8 +1,6 @@
 import { Box, Container, Grid } from "@mui/material"
 import { useState } from "react"
-import CountryCard from "../components/CountryCard"
-import SearchSelect from "../components/SearchSelect"
-import { SkeletonGrid } from "../components/SkeletonGrid"
+import { CountryCard, SearchSelect, SkeletonGrid } from "../components"
 import { ICountry, useGetCountriesQuery } from "../services/countriesApi"
 
 export default function CountriesList() {

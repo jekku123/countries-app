@@ -9,8 +9,7 @@ import {
 } from "@mui/material"
 import { useState } from "react"
 import { Link } from "react-router-dom"
-import Navigation from "./Navigation"
-import ThemeToggler from "./ThemeToggler"
+import { Navigation, ThemeToggler } from "."
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)

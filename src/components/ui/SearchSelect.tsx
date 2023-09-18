@@ -1,7 +1,7 @@
 import Autocomplete from "@mui/material/Autocomplete"
 import Box from "@mui/material/Box"
 import TextField from "@mui/material/TextField"
-import { ICountry } from "../services/countriesApi"
+import { ICountry } from "../../services/countriesApi"
 
 interface SearchSelectProps {
   countries?: ICountry[] | undefined
@@ -45,7 +45,7 @@ export default function SearchSelect({
           label="Search for a country"
           inputProps={{
             ...params.inputProps,
-            autoComplete: "new-password",
+            autoComplete: "off",
           }}
         />
       )}

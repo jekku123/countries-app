@@ -2,7 +2,7 @@ import Brightness4Icon from "@mui/icons-material/Brightness4"
 import Brightness7Icon from "@mui/icons-material/Brightness7"
 import { IconButton, useTheme } from "@mui/material"
 import { useContext } from "react"
-import { ThemeContext } from "../context/ThemeContext"
+import { ThemeContext } from "../../context/ThemeContext"
 
 export default function ThemeToggler() {
   const theme = useTheme()

@@ -4,7 +4,7 @@ import Box from "@mui/material/Box"
 import Fade from "@mui/material/Fade"
 import useScrollTrigger from "@mui/material/useScrollTrigger"
 
-export function ScrollTop() {
+export default function ScrollTop() {
   const trigger = useScrollTrigger({
     threshold: 100,
     disableHysteresis: true, // if false button disappears when scrolling up

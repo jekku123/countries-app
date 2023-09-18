@@ -10,7 +10,8 @@ import CardContent from "@mui/material/CardContent"
 import CardMedia from "@mui/material/CardMedia"
 import Typography from "@mui/material/Typography"
 import { useNavigate } from "react-router-dom"
-import { ICountry } from "../services/countriesApi"
+import { ICountry } from "../../services/countriesApi"
+import { formatNumber } from "../../utils/formatters"
 
 interface CountryCardProps {
   country: ICountry
@@ -18,8 +19,6 @@ interface CountryCardProps {
 
 export default function CountryCard({ country }: CountryCardProps) {
   const navigate = useNavigate()
-
-  const population = new Intl.NumberFormat().format(country.population)
 
   const handleCardClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -66,7 +65,7 @@ export default function CountryCard({ country }: CountryCardProps) {
               gap: "0.5rem",
             }}
           >
-            <People /> {population}
+            <People /> {formatNumber(country.population)}
           </Typography>
           <Typography
             gutterBottom

@@ -1,6 +1,6 @@
 import { Grid, Skeleton } from "@mui/material"
 
-export function SkeletonGrid() {
+export default function SkeletonGrid() {
   return (
     <Grid container spacing={5} px="20px">
       {Array.from(Array(6)).map((_, i) => (
