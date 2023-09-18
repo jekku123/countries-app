@@ -9,7 +9,7 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material"
-import { Link, NavLink } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
 interface NavigationProps {
   handleDrawerToggle: () => void
@@ -25,14 +25,20 @@ export default function Navigation({
   handleDrawerToggle,
   mobileOpen,
 }: NavigationProps) {
+  const { pathname } = useLocation()
+
   return (
     <>
       {navItems.map((item) => (
         <Button
           key={item.label}
-          component={NavLink}
+          component={Link}
           to={item.to}
-          sx={{ color: "#fff" }}
+          sx={{
+            textDecoration:
+              pathname === item.to ? "underline !important" : "none",
+            color: "#fff",
+          }}
         >
           {item.label}
         </Button>

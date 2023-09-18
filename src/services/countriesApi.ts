@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
-const BASE_URL = "https://restcountries.com/v3.1/"
+const BASE_URL = "https://restcountries.com/v3.1"
 
 export interface ICountry {
   name: {
@@ -25,10 +25,10 @@ export const countriesApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: (builder) => ({
     getCountries: builder.query<ICountry[], void>({
-      query: () => `all`,
+      query: () => "all?fields=name,flags,population,capital,currencies",
       transformResponse: (response: ICountry[]) => {
         const sortedCountries = response.sort((a, b) =>
-          a.name.common.localeCompare(b.name.common),
+          a.name.common.localeCompare(b.name.common, "fi"),
         )
         return sortedCountries
       },

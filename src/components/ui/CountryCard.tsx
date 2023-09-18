@@ -1,5 +1,6 @@
 import {
   CreditCard,
+  Favorite,
   FavoriteBorder,
   LocationCity,
   People,
@@ -9,6 +10,7 @@ import Card from "@mui/material/Card"
 import CardContent from "@mui/material/CardContent"
 import CardMedia from "@mui/material/CardMedia"
 import Typography from "@mui/material/Typography"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { ICountry } from "../../services/countriesApi"
 import { formatNumber } from "../../utils/formatters"
@@ -18,6 +20,7 @@ interface CountryCardProps {
 }
 
 export default function CountryCard({ country }: CountryCardProps) {
+  const [favorite, setFavorite] = useState(false)
   const navigate = useNavigate()
 
   const handleCardClick = (
@@ -27,6 +30,13 @@ export default function CountryCard({ country }: CountryCardProps) {
     setTimeout(() => {
       navigate(`/countries/${country.name.common}`, { state: { country } })
     }, 500)
+  }
+
+  const handleFavoriteClick = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ) => {
+    e.stopPropagation()
+    setFavorite(!favorite)
   }
 
   return (
@@ -53,7 +63,13 @@ export default function CountryCard({ country }: CountryCardProps) {
             <Typography gutterBottom variant="h5" component="h2">
               {country.name.common}
             </Typography>
-            <FavoriteBorder fontSize="large" />
+            <Box onClick={handleFavoriteClick}>
+              {favorite ? (
+                <Favorite fontSize="large" color="error" />
+              ) : (
+                <FavoriteBorder fontSize="large" />
+              )}
+            </Box>
           </Box>
           <Typography
             gutterBottom
@@ -65,7 +81,8 @@ export default function CountryCard({ country }: CountryCardProps) {
               gap: "0.5rem",
             }}
           >
-            <People /> {formatNumber(country.population)}
+            <People />
+            {formatNumber(country.population)}
           </Typography>
           <Typography
             gutterBottom
@@ -77,7 +94,8 @@ export default function CountryCard({ country }: CountryCardProps) {
               gap: "0.5rem",
             }}
           >
-            <LocationCity /> {country.capital?.[0]}
+            <LocationCity />
+            {country.capital?.[0]}
           </Typography>
           <Typography
             gutterBottom
