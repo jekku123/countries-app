@@ -14,6 +14,10 @@ export default function CountriesList() {
     setSearch(value)
   }
 
+  const filteredCountries = countries?.filter((country: ICountry) =>
+    country.name?.common?.toLowerCase().includes(search.toLowerCase()),
+  )
+
   if (error) return <div>There was an error</div>
 
   return (
@@ -23,18 +27,11 @@ export default function CountriesList() {
       </Box>
       {!isLoading ? (
         <Grid container spacing={5} px="20px" justifyContent={"center"}>
-          {countries?.reduce(
-            (prev: any, country: ICountry) =>
-              country.name.common.toLowerCase().includes(search.toLowerCase())
-                ? [
-                    ...prev,
-                    <Grid key={country.name.common} item xs={12} sm={6} md={4}>
-                      <CountryCard country={country} />
-                    </Grid>,
-                  ]
-                : prev,
-            [],
-          )}
+          {filteredCountries?.map((country: ICountry) => (
+            <Grid key={country.name.common} item xs={12} sm={6} md={4}>
+              <CountryCard country={country} />
+            </Grid>
+          ))}
         </Grid>
       ) : (
         <SkeletonGrid />

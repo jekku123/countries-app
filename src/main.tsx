@@ -8,7 +8,6 @@ import { Provider } from "react-redux"
 import { RouterProvider } from "react-router-dom"
 import { store } from "./app/store"
 import ThemeContextProvider from "./context/ThemeContext"
-import "./index.css"
 import { router } from "./router/router"
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

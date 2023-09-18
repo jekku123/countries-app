@@ -42,14 +42,6 @@ export default function ThemeContextProvider({
                   fontSize: 11,
                 },
               },
-              {
-                props: {
-                  variant: "body3",
-                },
-                style: {
-                  fontSize: 9,
-                },
-              },
             ],
           },
         },
