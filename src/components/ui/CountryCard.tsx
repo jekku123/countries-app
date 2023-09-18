@@ -82,7 +82,9 @@ export default function CountryCard({ country }: CountryCardProps) {
             }}
           >
             <People />
-            {formatNumber(country.population)}
+            {country.population > 0
+              ? formatNumber(country.population)
+              : "No population"}
           </Typography>
           <Typography
             gutterBottom
@@ -95,7 +97,7 @@ export default function CountryCard({ country }: CountryCardProps) {
             }}
           >
             <LocationCity />
-            {country.capital?.[0]}
+            {country.capital?.[0] ?? "No capital"}
           </Typography>
           <Typography
             gutterBottom
@@ -108,9 +110,11 @@ export default function CountryCard({ country }: CountryCardProps) {
             }}
           >
             <CreditCard />
-            {Object.keys(country?.currencies)
-              .map((currencyCode) => country.currencies[currencyCode]?.name)
-              .join(", ")}
+            {Object.keys(country.currencies).at(0)
+              ? Object.keys(country.currencies)
+                  .map((currencyCode) => country.currencies[currencyCode].name)
+                  .join(", ")
+              : "No currency"}
           </Typography>
         </CardContent>
       </CardActionArea>
