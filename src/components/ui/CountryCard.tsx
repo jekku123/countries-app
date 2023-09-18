@@ -108,18 +108,9 @@ export default function CountryCard({ country }: CountryCardProps) {
             }}
           >
             <CreditCard />
-            {country.currencies && (
-              <>
-                {Object.keys(country.currencies).map((currencyCode) => {
-                  const currency = country.currencies[currencyCode]
-                  return (
-                    <Box key={currencyCode} component="span">
-                      {currency?.name}
-                    </Box>
-                  )
-                })}
-              </>
-            )}
+            {Object.keys(country?.currencies)
+              .map((currencyCode) => country.currencies[currencyCode]?.name)
+              .join(", ")}
           </Typography>
         </CardContent>
       </CardActionArea>
