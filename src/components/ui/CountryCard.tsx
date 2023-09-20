@@ -13,7 +13,6 @@ import Typography from "@mui/material/Typography"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { ICountry } from "../../services/countriesApi"
-import { formatNumber } from "../../utils/formatters"
 
 interface CountryCardProps {
   country: ICountry
@@ -83,7 +82,7 @@ export default function CountryCard({ country }: CountryCardProps) {
           >
             <People />
             {country.population > 0
-              ? formatNumber(country.population)
+              ? country.population.toLocaleString()
               : "No population"}
           </Typography>
           <Typography
