@@ -10,6 +10,7 @@ import {
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { Navigation, ThemeToggler } from "."
+import site from "../data/site.json"
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -44,7 +45,7 @@ export default function Header() {
                   marginRight: 3,
                 }}
               >
-                Countries App
+                {site.title}
               </Typography>
               <Box
                 sx={{

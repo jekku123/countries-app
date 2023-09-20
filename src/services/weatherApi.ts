@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
-const BASE_URL = "https://api.openweathermap.org/data/2.5/"
+const BASE_URL = import.meta.env.VITE_OPENWEATHER_URL
 const API_KEY = import.meta.env.VITE_OPENWEATHER_KEY
 
 export const weatherApi = createApi({

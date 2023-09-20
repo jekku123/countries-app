@@ -10,16 +10,12 @@ import {
   Typography,
 } from "@mui/material"
 import { Link, useLocation } from "react-router-dom"
+import site from "../../data/site.json"
 
 interface NavigationProps {
   handleDrawerToggle: () => void
   mobileOpen: boolean
 }
-
-const navItems = [
-  { label: "Home", to: "/" },
-  { label: "Countries", to: "/countries" },
-]
 
 export default function Navigation({
   handleDrawerToggle,
@@ -29,7 +25,7 @@ export default function Navigation({
 
   return (
     <>
-      {navItems.map((item) => (
+      {site.navItems.map((item) => (
         <Button
           key={item.label}
           component={Link}
@@ -60,11 +56,11 @@ export default function Navigation({
       >
         <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
           <Typography variant="h6" sx={{ my: 2 }}>
-            Countries App
+            {site.title}
           </Typography>
           <Divider />
           <List>
-            {navItems.map((item) => (
+            {site.navItems.map((item) => (
               <ListItem key={item.label} disablePadding>
                 <ListItemButton
                   component={Link}

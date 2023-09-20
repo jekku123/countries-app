@@ -1,12 +1,12 @@
 import { Box, Container, Divider, Link, Typography } from "@mui/material"
+import site from "../data/site.json"
 
 export default function Home() {
   return (
     <Container maxWidth="md">
       <Box my="25px" px="25px">
         <Typography variant="h3" component="h2" marginBottom={3}>
-          Countries app is a simple React application made in Business College
-          Helsinki lessons.
+          {site.description}
         </Typography>
         <Divider />
         <Typography
@@ -15,24 +15,16 @@ export default function Home() {
           marginTop={3}
           marginBottom={1}
         >
-          App uses:
+          {site.source.title}
         </Typography>
         <Box>
-          <Link
-            href="https://restcountries.com/"
-            rel="noreferrer"
-            target="_blank"
-          >
-            https://restcountries.com/
+          <Link href={site.source.link_1} rel="noreferrer" target="_blank">
+            {site.source.link_1}
           </Link>
         </Box>
         <Box>
-          <Link
-            href="https://openweathermap.org/"
-            rel="noreferrer"
-            target="_blank"
-          >
-            https://openweathermap.org/
+          <Link href={site.source.link_1} rel="noreferrer" target="_blank">
+            {site.source.link_2}
           </Link>
         </Box>
       </Box>

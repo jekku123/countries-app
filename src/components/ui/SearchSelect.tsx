@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField"
 import { ICountry } from "../../services/countriesApi"
 
 interface SearchSelectProps {
-  countries?: ICountry[] | undefined
+  countries?: ICountry[]
   handleSearch: (
     _e: React.SyntheticEvent<Element, Event>,
     value: string,
@@ -17,7 +17,6 @@ export default function SearchSelect({
 }: SearchSelectProps) {
   return (
     <Autocomplete
-      id="country-select-demo"
       sx={{ width: 300 }}
       options={countries}
       autoHighlight
@@ -33,8 +32,7 @@ export default function SearchSelect({
             loading="lazy"
             width="20"
             src={option.flags.svg}
-            srcSet={`${option.flags.svg} 2x`}
-            alt=""
+            alt={option.name.common}
           />
           {option.name.common}
         </Box>
