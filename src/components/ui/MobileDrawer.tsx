@@ -1,32 +1,20 @@
-import { Box, Button, Divider, Drawer, Typography } from "@mui/material"
-import { Link, useLocation } from "react-router-dom"
+import {
+  Box,
+  Button,
+  Divider,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Typography,
+} from "@mui/material"
+import { NavLink, useLocation } from "react-router-dom"
 import site from "../../data/site.json"
 
 interface NavigationProps {
   handleDrawerToggle: () => void
   mobileOpen: boolean
-}
-
-function NavItems({ pathname }: { pathname: string }) {
-  return (
-    <>
-      {site.navItems.map((item) => (
-        <Button
-          key={item.label}
-          component={Link}
-          to={item.to}
-          sx={{
-            textDecoration:
-              pathname === item.to ? "underline !important" : "none",
-            color: "#fff",
-            height: { xs: 60, sm: "auto" },
-          }}
-        >
-          {item.label}
-        </Button>
-      ))}
-    </>
-  )
 }
 
 export default function Navigation({
@@ -37,6 +25,20 @@ export default function Navigation({
 
   return (
     <>
+      {site.navItems.map((item) => (
+        <Button
+          key={item.label}
+          component={NavLink}
+          to={item.to}
+          sx={{
+            textDecoration:
+              pathname === item.to ? "underline !important" : "none",
+            color: "#fff",
+          }}
+        >
+          {item.label}
+        </Button>
+      ))}
       <Drawer
         variant="temporary"
         anchor="top"
@@ -57,25 +59,21 @@ export default function Navigation({
             {site.title}
           </Typography>
           <Divider />
-          <Box sx={{ display: "flex", flexDirection: "column" }}>
-            <NavItems pathname={pathname} />
-          </Box>
+          <List>
+            {site.navItems.map((item) => (
+              <ListItem key={item.label} disablePadding>
+                <ListItemButton
+                  component={NavLink}
+                  to={item.to}
+                  sx={{ textAlign: "center" }}
+                >
+                  <ListItemText primary={item.label} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
         </Box>
       </Drawer>
     </>
   )
 }
-
-/* <List>
-{site.navItems.map((item) => (
-  <ListItem key={item.label} disablePadding>
-    <ListItemButton
-      component={Link}
-      to={item.to}
-      sx={{ textAlign: "center" }}
-    >
-      <ListItemText primary={item.label} />
-    </ListItemButton>
-  </ListItem>
-))}
-</List> */

@@ -7,8 +7,8 @@ export interface ICountry {
     common: string
   }
   flags: {
-    png: string
     svg: string
+    png: string
   }
   population: number
   capital: string[]
