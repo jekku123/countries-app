@@ -37,9 +37,10 @@ export default function Navigation({
 
   return (
     <>
+      <NavItems pathname={pathname} />
       <Drawer
         variant="temporary"
-        anchor="top"
+        anchor="left"
         open={mobileOpen}
         onClose={handleDrawerToggle}
         ModalProps={{

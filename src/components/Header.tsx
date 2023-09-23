@@ -2,6 +2,7 @@ import MenuIcon from "@mui/icons-material/Menu"
 import {
   AppBar,
   Box,
+  CircularProgress,
   Container,
   IconButton,
   Toolbar,
@@ -9,15 +10,17 @@ import {
 } from "@mui/material"
 import { useState } from "react"
 import { Link } from "react-router-dom"
-import { Navigation, ThemeToggler } from "."
 import site from "../data/site.json"
+import useFirebaseAuth from "../hooks/useFirebaseAuth"
+import { Navigation, ThemeToggler, UserMenu } from "./"
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
-
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState)
   }
+
+  const { user, loading } = useFirebaseAuth()
 
   return (
     <header>
@@ -62,7 +65,22 @@ export default function Header() {
                   display: { xs: "block", sm: "none", flexGrow: 1 },
                 }}
               />
-              <ThemeToggler />
+              <Box sx={{ display: "flex", gap: "10px" }}>
+                <ThemeToggler />
+                {!loading ? (
+                  <UserMenu user={user} />
+                ) : (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <CircularProgress />
+                  </Box>
+                )}
+              </Box>
             </Toolbar>
           </Container>
         </AppBar>

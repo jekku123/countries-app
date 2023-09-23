@@ -7,10 +7,6 @@ export default function CountriesList() {
   const { data: countries, isLoading, error } = useGetCountriesQuery()
   const [search, setSearch] = useState("")
 
-  const filteredCountries = countries?.filter((country: ICountry) =>
-    country.name.common.toLowerCase().includes(search.toLowerCase()),
-  )
-
   const handleSearch = (
     _e: React.SyntheticEvent<Element, Event>,
     value: string,
@@ -27,11 +23,18 @@ export default function CountriesList() {
       </Box>
       {!isLoading ? (
         <Grid container spacing={5} px="20px" justifyContent={"center"}>
-          {filteredCountries?.map((country: ICountry) => (
-            <Grid key={country.name.common} item xs={12} sm={6} md={4}>
-              <CountryCard country={country} />
-            </Grid>
-          ))}
+          {countries?.reduce(
+            (prev: JSX.Element[], country: ICountry) =>
+              country.name?.common?.toLowerCase().includes(search.toLowerCase())
+                ? [
+                    ...prev,
+                    <Grid key={country.name.common} item xs={12} sm={6} md={4}>
+                      <CountryCard country={country} />
+                    </Grid>,
+                  ]
+                : prev,
+            [],
+          )}
         </Grid>
       ) : (
         <SkeletonGrid />
@@ -39,18 +42,3 @@ export default function CountriesList() {
     </Container>
   )
 }
-
-// <Grid container spacing={5} px="20px" justifyContent={"center"}>
-//   {countries?.reduce(
-//     (prev: any, country: ICountry) =>
-//       country.name?.common?.toLowerCase().includes(search.toLowerCase())
-//         ? [
-//             ...prev,
-//             <Grid key={country.name.common} item xs={12} sm={6} md={4}>
-//               <CountryCard country={country} />
-//             </Grid>,
-//           ]
-//         : prev,
-//     [],
-//   )}
-// </Grid>
