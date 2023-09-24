@@ -1,9 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   Button,
   Container,
-  FormControl,
-  Input,
-  InputLabel,
   Link,
   Paper,
   PaperProps,
@@ -12,10 +10,11 @@ import {
 } from "@mui/material"
 import { useEffect } from "react"
 import { Link as RouterLink, useNavigate } from "react-router-dom"
+import GenerateFormFields from "../components/GenerateFormFields"
 import useFirebaseAuth from "../hooks/useFirebaseAuth"
 import { useForm } from "../hooks/useForm"
 
-const FormPaper = styled(Paper)<PaperProps>(({ theme }) => ({
+const StyledPaper = styled(Paper)<PaperProps>(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
@@ -24,6 +23,7 @@ const FormPaper = styled(Paper)<PaperProps>(({ theme }) => ({
   marginBottom: "30px",
   maxWidth: "400px",
   background: theme.palette.background.default,
+  elevation: 3,
 }))
 
 const initState = {
@@ -34,8 +34,14 @@ const initState = {
 export default function Login() {
   const navigate = useNavigate()
   const { formState, handleFormChanges } = useForm(initState)
-  const { user, loading, signInWithEmailAndPassword, signInWithGoogle } =
-    useFirebaseAuth()
+  const {
+    user,
+    loading,
+    signInWithEmailAndPassword,
+    signInWithGoogle,
+    signInLoading,
+    signInError,
+  } = useFirebaseAuth()
 
   useEffect(() => {
     if (loading) return
@@ -44,7 +50,9 @@ export default function Login() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    await signInWithEmailAndPassword(formState.email, formState.password)
+    const { email, password } = formState
+    if (!email || !password) return
+    await signInWithEmailAndPassword(email, password)
   }
 
   return (
@@ -55,61 +63,35 @@ export default function Login() {
         flexDirection: "column",
       }}
     >
-      <FormPaper elevation={3}>
+      <StyledPaper elevation={3}>
         <Typography variant="h5" component="h2">
           Login
         </Typography>
         <form onSubmit={handleSubmit}>
-          <FormControl margin="normal" variant="standard" fullWidth>
-            <InputLabel htmlFor="email">Email</InputLabel>
-            <Input
-              id="email"
-              name="email"
-              onChange={handleFormChanges}
-              value={formState.email}
-              autoFocus
-              inputProps={{
-                form: {
-                  autoComplete: "off",
-                },
-              }}
-            />
-          </FormControl>
-          <FormControl margin="normal" variant="standard" fullWidth>
-            <InputLabel htmlFor="password">Password</InputLabel>
-            <Input
-              id="password"
-              name="password"
-              type="password"
-              onChange={handleFormChanges}
-              value={formState.password}
-              inputProps={{
-                autoComplete: "new-password",
-              }}
-            />
-          </FormControl>
+          <GenerateFormFields {...{ formState, handleFormChanges }} />
           <Button
             type="submit"
             variant="contained"
             fullWidth
             sx={{ marginTop: "20px" }}
+            disabled={signInLoading}
           >
             Login
           </Button>
         </form>
         <Button
           onClick={() => signInWithGoogle()}
-          type="submit"
           variant="contained"
           fullWidth
           sx={{ marginTop: "20px" }}
         >
           Sign in with Google
         </Button>
-      </FormPaper>
+      </StyledPaper>
       <Link component={RouterLink} to="/register">
         No account? Register here
       </Link>
+      {signInError && <p>{signInError.code}</p>}
     </Container>
   )
 }

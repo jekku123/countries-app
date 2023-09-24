@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useCallback, useState } from "react"
 
 type FormState = {
   [key: string]: string
@@ -7,11 +7,15 @@ type FormState = {
 export function useForm(initState: FormState) {
   const [formState, setForm] = useState(initState)
 
-  const handleFormChanges = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({
-      ...formState,
-      [e.target.name]: e.target.value,
-    })
-  }
+  const handleFormChanges = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setForm((prev) => ({
+        ...prev,
+        [e.target.name]: e.target.value,
+      }))
+    },
+    [setForm],
+  )
+
   return { formState, handleFormChanges }
 }

@@ -19,20 +19,18 @@ export default function useFirebaseAuth() {
     useSignInWithGoogle(auth)
   const [signOut] = useSignOut(auth)
 
-  const createUser = async (
+  const createUserWithNameEmailAndPassword = async (
     username: string,
     email: string,
     password: string,
   ) => {
     const newUser = await signUp(email, password)
-    if (!newUser) return alert("Error creating user")
-    console.log("User created")
+    if (!newUser) return null
 
-    const updateOk = await updateProfile({
+    const updated = await updateProfile({
       displayName: username,
     })
-    if (!updateOk) return alert("Error updating profile")
-    console.log("Profile updated")
+    if (!updated) return null
 
     return newUser
   }
@@ -57,6 +55,6 @@ export default function useFirebaseAuth() {
     googleLoading,
     googleError,
     signOut,
-    createUserWithNameEmailAndPassword: createUser,
+    createUserWithNameEmailAndPassword,
   }
 }

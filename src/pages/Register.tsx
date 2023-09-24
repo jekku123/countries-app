@@ -1,9 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   Button,
   Container,
-  FormControl,
-  Input,
-  InputLabel,
   Link,
   Paper,
   PaperProps,
@@ -12,6 +10,7 @@ import {
 } from "@mui/material"
 import { useEffect } from "react"
 import { Link as RouterLink, useNavigate } from "react-router-dom"
+import GenerateFormFields from "../components/GenerateFormFields"
 import useFirebaseAuth from "../hooks/useFirebaseAuth"
 import useFirestore from "../hooks/useFirestore"
 import { useForm } from "../hooks/useForm"
@@ -28,20 +27,22 @@ const StyledPaper = styled(Paper)<PaperProps>(({ theme }) => ({
 }))
 
 const initState = {
-  username: "",
+  name: "",
   email: "",
   password: "",
 }
 
 export default function Register() {
-  const { formState, handleFormChanges } = useForm(initState)
-
-  const { user, loading, createUserWithNameEmailAndPassword } =
-    useFirebaseAuth()
-
-  const { addUserToDatabase } = useFirestore()
-
   const navigate = useNavigate()
+  const { addUserToDatabase } = useFirestore()
+  const { formState, handleFormChanges } = useForm(initState)
+  const {
+    user,
+    loading,
+    createUserWithNameEmailAndPassword,
+    signUpError,
+    signUpLoading,
+  } = useFirebaseAuth()
 
   useEffect(() => {
     if (loading) return
@@ -50,15 +51,17 @@ export default function Register() {
 
   const handleRegistration = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (!formState.username) return alert("Please enter your username")
+    const { name, email, password } = formState
+    if (!name || !email || !password) return
     const newUser = await createUserWithNameEmailAndPassword(
-      formState.username,
-      formState.email,
-      formState.password,
+      name,
+      email,
+      password,
     )
+    if (!newUser) return
     addUserToDatabase(newUser, {
-      username: formState.username,
-      email: formState.email,
+      name,
+      email,
     })
   }
 
@@ -75,53 +78,13 @@ export default function Register() {
           Sign Up
         </Typography>
         <form onSubmit={handleRegistration}>
-          <FormControl margin="normal" variant="standard" fullWidth>
-            <InputLabel htmlFor="username">Username</InputLabel>
-            <Input
-              id="username"
-              name="username"
-              onChange={handleFormChanges}
-              value={formState.username}
-              autoFocus
-              inputProps={{
-                form: {
-                  autoComplete: "off",
-                },
-              }}
-            />
-          </FormControl>
-          <FormControl margin="normal" variant="standard" fullWidth>
-            <InputLabel htmlFor="email">Email</InputLabel>
-            <Input
-              id="email"
-              name="email"
-              onChange={handleFormChanges}
-              value={formState.email}
-              inputProps={{
-                form: {
-                  autoComplete: "off",
-                },
-              }}
-            />
-          </FormControl>
-          <FormControl margin="normal" variant="standard" fullWidth>
-            <InputLabel htmlFor="password">Password</InputLabel>
-            <Input
-              id="password"
-              name="password"
-              type="password"
-              onChange={handleFormChanges}
-              value={formState.password}
-              inputProps={{
-                autoComplete: "new-password",
-              }}
-            />
-          </FormControl>
+          <GenerateFormFields {...{ formState, handleFormChanges }} />
           <Button
             type="submit"
             variant="contained"
             fullWidth
             sx={{ marginTop: "20px" }}
+            disabled={signUpLoading}
           >
             Register
           </Button>
@@ -130,6 +93,7 @@ export default function Register() {
       <Link component={RouterLink} to="/login">
         Already have an account? Login here
       </Link>
+      {signUpError && <p>{signUpError.code}</p>}
     </Container>
   )
 }

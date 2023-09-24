@@ -11,7 +11,7 @@ export default function useFirestore() {
   const [error, setError] = useState("")
 
   const addUserToDatabase = async (
-    user: UserCredential | void,
+    user: UserCredential | null,
     userData: FormState,
   ) => {
     try {
@@ -21,9 +21,7 @@ export default function useFirestore() {
         created: serverTimestamp(),
         authProvider: "local",
       })
-      console.log("User added to Database")
     } catch (err: any) {
-      console.log("Error adding user to Database")
       setError(err.message)
     }
   }

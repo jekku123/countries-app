@@ -40,6 +40,7 @@ export default function UserMenu({ user }: { user: User | null | undefined }) {
           horizontal: "right",
         }}
         keepMounted
+        disableScrollLock={true}
         transformOrigin={{
           vertical: "top",
           horizontal: "right",
