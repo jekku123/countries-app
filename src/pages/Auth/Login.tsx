@@ -11,10 +11,10 @@ const initState = {
 type FormState = typeof initState
 
 export default function Login() {
-  const [signInWithEmailAndPassword, , signInLoading, signInError] =
+  const [signInWithEmailAndPassword, , loading, error] =
     useSignInWithEmailAndPassword(auth)
 
-  const handleLogin = async (values: FormState) => {
+  const onSubmit = async (values: FormState) => {
     const { email, password } = values
     if (!email || !password) return
     await signInWithEmailAndPassword(email, password)
@@ -24,9 +24,9 @@ export default function Login() {
     <AuthForm
       {...{
         initState,
-        onSubmit: handleLogin,
-        loading: signInLoading,
-        error: signInError,
+        onSubmit,
+        loading,
+        error,
       }}
     />
   )

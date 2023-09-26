@@ -30,10 +30,10 @@ const validationSchema = yup.object({
 })
 
 export default function Register() {
-  const [createUserWithEmailAndPassword, , signUpLoading, signUpError] =
+  const [createUserWithEmailAndPassword, , loading, error] =
     useCreateUserWithEmailAndPassword(auth)
 
-  const handleRegistration = async (values: FormState) => {
+  const onSubmit = async (values: FormState) => {
     const { name, email, password } = values
     const userData = await createUserWithEmailAndPassword(email, password)
     if (!userData) return
@@ -50,10 +50,10 @@ export default function Register() {
     <AuthForm
       {...{
         initState,
-        onSubmit: handleRegistration,
+        onSubmit,
         validationSchema,
-        loading: signUpLoading,
-        error: signUpError,
+        loading,
+        error,
       }}
     />
   )
