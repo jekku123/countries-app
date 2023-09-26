@@ -1,4 +1,3 @@
-export { default as FormFields } from "../pages/FormFields"
 export { default as Header } from "./Header"
 export { default as CountryCard } from "./ui/CountryCard"
 export { default as MobileDrawer } from "./ui/MobileDrawer"

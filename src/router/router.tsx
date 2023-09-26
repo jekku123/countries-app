@@ -5,9 +5,9 @@ import { auth } from "../auth/firebase"
 import CountriesList from "../pages/CountriesList"
 import CountriesSingle from "../pages/CountriesSingle"
 import Home from "../pages/Home"
-import Login from "../pages/Login"
 
-import Register from "../pages/Register"
+import Login from "../pages/Auth/Login"
+import Register from "../pages/Auth/Register"
 
 const ProtectedRoute = () => {
   const [user] = useAuthState(auth)
