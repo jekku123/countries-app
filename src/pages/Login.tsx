@@ -4,7 +4,6 @@ import {
   Box,
   Button,
   Container,
-  ContainerProps,
   Divider,
   Link,
   Paper,
@@ -25,7 +24,7 @@ import FormFields from "./FormFields"
 
 const StyledPaper = styled(Paper)<PaperProps>(({ theme }) => ({
   padding: "30px",
-  margin: "30px",
+  marginBottom: "20px",
   maxWidth: "350px",
   background: theme.palette.background.default,
 }))
@@ -36,10 +35,11 @@ const StyledBox = styled(Box)(() => ({
   width: "100%",
 }))
 
-const StyledContainer = styled(Container)<ContainerProps>(() => ({
+const StyledContainer = styled(Container)(() => ({
   display: "flex",
   alignItems: "center",
   flexDirection: "column",
+  padding: "30px",
 }))
 
 const initState = {
@@ -109,17 +109,17 @@ export default function Login() {
         </Button>
       </StyledPaper>
 
-      <Typography variant="body2" color="error" component="p">
-        {signInError && signInError.code}
-        {googleError && googleError.code}
-      </Typography>
-
       <Typography variant="body1" component="p">
         No account?{" "}
         <Link component={RouterLink} to="/register">
           Register{" "}
         </Link>
         now
+      </Typography>
+
+      <Typography variant="body1" component="p" color="error">
+        {signInError && signInError.code}
+        {googleError && googleError.code}
       </Typography>
     </StyledContainer>
   )

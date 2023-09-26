@@ -26,7 +26,7 @@ import FormFields from "./FormFields"
 
 const StyledPaper = styled(Paper)<PaperProps>(({ theme }) => ({
   padding: "30px",
-  margin: "30px",
+  marginBottom: "20px",
   maxWidth: "350px",
   background: theme.palette.background.default,
 }))
@@ -41,6 +41,7 @@ const StyledContainer = styled(Container)(() => ({
   display: "flex",
   alignItems: "center",
   flexDirection: "column",
+  padding: "30px",
 }))
 
 const initState = {
@@ -118,15 +119,17 @@ export default function Register() {
           Signup with Google
         </Button>
       </StyledPaper>
+
       <Typography variant="body1" component="p">
         Already have an account?{" "}
         <Link component={RouterLink} to="/login">
           Login
         </Link>
       </Typography>
-      <Typography variant="body2" color="error" component="p">
-        {signUpError && <p>{signUpError.code}</p>}
-        {googleError && <p>{googleError.code}</p>}
+
+      <Typography variant="body1" component="p" color="error" marginTop={1}>
+        {signUpError && signUpError.code}
+        {googleError && googleError.code}
       </Typography>
     </StyledContainer>
   )
