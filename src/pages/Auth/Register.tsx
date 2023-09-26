@@ -1,15 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { updateProfile } from "firebase/auth"
-import { useFormik } from "formik"
-import { useEffect } from "react"
-import {
-  useAuthState,
-  useCreateUserWithEmailAndPassword,
-} from "react-firebase-hooks/auth"
-import { useNavigate } from "react-router-dom"
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth"
 import * as yup from "yup"
 import { auth } from "../../auth/firebase"
 import { setUserToDatabase } from "../../firestore/db"
-import Form from "./AuthForm"
+import AuthForm from "./AuthForm"
 
 const initState = {
   name: "",
@@ -35,24 +30,10 @@ const validationSchema = yup.object({
 })
 
 export default function Register() {
-  const formik = useFormik({
-    initialValues: initState,
-    validationSchema: validationSchema,
-    onSubmit: handleRegistration,
-  })
-  const [user, loading] = useAuthState(auth)
-
   const [createUserWithEmailAndPassword, , signUpLoading, signUpError] =
     useCreateUserWithEmailAndPassword(auth)
 
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    if (loading) return
-    if (user) navigate("/countries")
-  }, [user, loading])
-
-  async function handleRegistration(values: FormState) {
+  const handleRegistration = async (values: FormState) => {
     const { name, email, password } = values
     const userData = await createUserWithEmailAndPassword(email, password)
     if (!userData) return
@@ -66,11 +47,13 @@ export default function Register() {
   }
 
   return (
-    <Form
+    <AuthForm
       {...{
-        formik,
-        signUpLoading,
-        signUpError,
+        initState,
+        onSubmit: handleRegistration,
+        validationSchema,
+        loading: signUpLoading,
+        error: signUpError,
       }}
     />
   )

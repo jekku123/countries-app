@@ -16,6 +16,7 @@ import {
   Typography,
   styled,
 } from "@mui/material"
+import { useFormik } from "formik"
 import { useSignInWithGoogle } from "react-firebase-hooks/auth"
 import { Link as RouterLink, useLocation } from "react-router-dom"
 import { auth } from "../../auth/firebase"
@@ -41,22 +42,29 @@ const StyledContainer = styled(Container)<ContainerProps>(() => ({
 }))
 
 export default function AuthForm({
-  signUpLoading,
-  signInLoading,
-  formik,
-  signUpError,
-  signInError,
+  initState,
+  onSubmit,
+  validationSchema,
+  loading,
+  error,
 }: any) {
-  const { pathname } = useLocation()
   const [signInWithGoogle, , googleLoading] = useSignInWithGoogle(auth)
+
   const { values, touched, errors, handleBlur, handleChange, handleSubmit } =
-    formik
+    useFormik({
+      initialValues: initState,
+      validationSchema: validationSchema,
+      onSubmit,
+    })
+
+  const { pathname } = useLocation()
+  const isRegister = pathname === "/register"
 
   return (
     <StyledContainer>
       <StyledPaper elevation={3}>
         <Typography variant="h5" component="h2" align="center">
-          {pathname === "/register" ? "Sign up" : "Login"}
+          {isRegister ? "Sign up" : "Login"}
         </Typography>
         <form onSubmit={handleSubmit}>
           {Object.keys(values).map((fieldname, i) => (
@@ -64,11 +72,11 @@ export default function AuthForm({
               key={fieldname}
               margin="normal"
               variant="outlined"
+              error={touched[fieldname] && Boolean(errors[fieldname])}
               fullWidth
             >
               <InputLabel
                 htmlFor={fieldname}
-                error={touched && errors && Boolean(errors[fieldname])}
                 sx={{
                   textTransform: "capitalize",
                   bgcolor: "background.paper",
@@ -85,7 +93,6 @@ export default function AuthForm({
                 value={values[fieldname]}
                 onBlur={handleBlur}
                 onChange={handleChange}
-                error={touched && errors && Boolean(errors[fieldname])}
                 autoFocus={i === 0 ? true : false}
                 inputProps={{
                   autoComplete: "new-password",
@@ -94,10 +101,8 @@ export default function AuthForm({
                   },
                 }}
               />
-              <FormHelperText
-                error={touched && errors && Boolean(errors[fieldname])}
-              >
-                {touched && errors && touched[fieldname] && errors[fieldname]}
+              <FormHelperText>
+                <>{touched[fieldname] && errors[fieldname]}</>
               </FormHelperText>
             </FormControl>
           ))}
@@ -106,9 +111,9 @@ export default function AuthForm({
             variant="contained"
             fullWidth
             sx={{ marginTop: "20px" }}
-            disabled={signUpLoading || googleLoading || signInLoading}
+            disabled={loading || googleLoading}
           >
-            {pathname === "/register" ? "Sign up" : "Login"}
+            {isRegister ? "Sign up" : "Login"}
           </Button>
         </form>
 
@@ -124,39 +129,24 @@ export default function AuthForm({
           startIcon={<Google />}
           onClick={() => signInWithGoogle()}
           variant="contained"
-          disabled={signUpLoading || googleLoading || signInLoading}
+          disabled={loading || googleLoading}
           fullWidth
         >
           Login in with Google
         </Button>
       </StyledPaper>
 
-      {pathname === "/register" && (
-        <Typography variant="body1" component="p">
-          Already have an account?{" "}
-          <Link component={RouterLink} to="/login">
-            Login
-          </Link>
-        </Typography>
-      )}
-      {pathname === "/login" && (
-        <Typography variant="body1" component="p">
-          No account?{" "}
-          <Link component={RouterLink} to="/register">
-            Sign up{" "}
-          </Link>
-          now
-        </Typography>
-      )}
+      <Typography variant="body1" component="p">
+        {isRegister ? "Already have an account? " : "No account? "}
+        <Link component={RouterLink} to={isRegister ? "/login" : "/register"}>
+          {isRegister ? "Login" : "Sign up"}
+        </Link>
+        {!isRegister && " now"}
+      </Typography>
 
-      {signUpError && (
+      {error && (
         <Typography variant="body1" component="p" color="error" marginTop={1}>
-          {signUpError.code}
-        </Typography>
-      )}
-      {signInError && (
-        <Typography variant="body1" component="p" color="error">
-          Invalid credentials
+          {error.code}
         </Typography>
       )}
     </StyledContainer>
