@@ -1,27 +1,35 @@
-import { Box, Container, Grid } from "@mui/material"
+import { Box, Container, Grid, styled } from "@mui/material"
 import { useState } from "react"
 import { CountryCard, SearchSelect, SkeletonGrid } from "../components"
 import { ICountry, useGetCountriesQuery } from "../services/countriesApi"
+
+const StyledContainer = styled(Container)(() => ({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+}))
 
 export default function CountriesList() {
   const { data: countries, isLoading, error } = useGetCountriesQuery()
   const [search, setSearch] = useState("")
 
-  const handleSearch = (
-    _e: React.SyntheticEvent<Element, Event>,
-    value: string,
-  ) => {
-    setSearch(value)
+  const handleSearch = (e: React.SyntheticEvent<Element, Event>) => {
+    setSearch((e.target as HTMLInputElement).value)
   }
 
   if (error) return <div>There was an error</div>
 
   return (
-    <Container sx={{ marginY: 5 }} maxWidth="lg">
-      <Box marginBottom={5} sx={{ display: "flex", justifyContent: "center" }}>
+    <StyledContainer maxWidth="md" sx={{ my: 5 }}>
+      <Box marginBottom={5}>
         <SearchSelect countries={countries} handleSearch={handleSearch} />
       </Box>
-      {!isLoading ? (
+      {error ? (
+        <Box>Sorry, there was an error</Box>
+      ) : isLoading ? (
+        <SkeletonGrid />
+      ) : (
         <Grid container spacing={5} px="20px" justifyContent={"center"}>
           {countries?.reduce(
             (prev: JSX.Element[], country: ICountry) =>
@@ -36,9 +44,7 @@ export default function CountriesList() {
             [],
           )}
         </Grid>
-      ) : (
-        <SkeletonGrid />
       )}
-    </Container>
+    </StyledContainer>
   )
 }

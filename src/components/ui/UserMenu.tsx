@@ -10,8 +10,9 @@ import {
 } from "@mui/material"
 import { User } from "firebase/auth"
 import { useState } from "react"
+import { useSignOut } from "react-firebase-hooks/auth"
 import { useNavigate } from "react-router-dom"
-import useFirebaseAuth from "../../hooks/useFirebaseAuth"
+import { auth } from "../../auth/firebase"
 
 export default function UserMenu({ user }: { user: User | null | undefined }) {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
@@ -21,7 +22,7 @@ export default function UserMenu({ user }: { user: User | null | undefined }) {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null)
   }
-  const { signOut } = useFirebaseAuth()
+  const [signOut] = useSignOut(auth)
   const navigate = useNavigate()
 
   return (

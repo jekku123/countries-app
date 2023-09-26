@@ -1,11 +1,11 @@
-import { FormControl, Input, InputLabel } from "@mui/material"
+import { FormControl, InputLabel, OutlinedInput } from "@mui/material"
 
 interface GenerateFormFieldsProps {
   formState: { [key: string]: string }
   handleFormChanges: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-export default function GenerateFormFields({
+export default function FormFields({
   formState,
   handleFormChanges,
 }: GenerateFormFieldsProps) {
@@ -15,16 +15,24 @@ export default function GenerateFormFields({
         <FormControl
           key={fieldname}
           margin="normal"
-          variant="standard"
+          variant="outlined"
           fullWidth
         >
-          <InputLabel htmlFor={fieldname} sx={{ textTransform: "capitalize" }}>
+          <InputLabel
+            htmlFor={fieldname}
+            sx={{
+              textTransform: "capitalize",
+              bgcolor: "background.paper",
+              px: 1,
+            }}
+          >
             {fieldname}
           </InputLabel>
-          <Input
+          <OutlinedInput
             id={fieldname}
             key={fieldname}
             name={fieldname}
+            type={fieldname === "password" ? "password" : "text"}
             value={formState[fieldname]}
             onChange={handleFormChanges}
             autoFocus={i === 0 ? true : false}
@@ -40,3 +48,23 @@ export default function GenerateFormFields({
     </>
   )
 }
+
+/* <TextField
+key={fieldname}
+margin="normal"
+variant="outlined"
+fullWidth
+label={fieldname}
+name={fieldname}
+type={fieldname}
+sx={{ textTransform: "capitalize" }}
+value={formState[fieldname]}
+onChange={handleFormChanges}
+autoFocus={i === 0 ? true : false}
+inputProps={{
+  autoComplete: "new-password",
+  form: {
+    autoComplete: "off",
+  },
+}}
+/> */

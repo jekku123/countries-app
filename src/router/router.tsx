@@ -1,14 +1,16 @@
+import { useAuthState } from "react-firebase-hooks/auth"
 import { Navigate, Outlet, createBrowserRouter } from "react-router-dom"
 import Layout from "../Layout"
-import useFirebaseAuth from "../hooks/useFirebaseAuth"
+import { auth } from "../auth/firebase"
 import CountriesList from "../pages/CountriesList"
 import CountriesSingle from "../pages/CountriesSingle"
 import Home from "../pages/Home"
 import Login from "../pages/Login"
+
 import Register from "../pages/Register"
 
 const ProtectedRoute = () => {
-  const { user } = useFirebaseAuth()
+  const [user] = useAuthState(auth)
   return user ? <Outlet /> : <Navigate to="/login" />
 }
 

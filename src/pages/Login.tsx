@@ -1,7 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { Google } from "@mui/icons-material"
 import {
+  Box,
   Button,
   Container,
+  ContainerProps,
+  Divider,
   Link,
   Paper,
   PaperProps,
@@ -9,21 +13,33 @@ import {
   styled,
 } from "@mui/material"
 import { useEffect } from "react"
+import {
+  useAuthState,
+  useSignInWithEmailAndPassword,
+  useSignInWithGoogle,
+} from "react-firebase-hooks/auth"
 import { Link as RouterLink, useNavigate } from "react-router-dom"
-import GenerateFormFields from "../components/GenerateFormFields"
-import useFirebaseAuth from "../hooks/useFirebaseAuth"
+import { auth } from "../auth/firebase"
 import { useForm } from "../hooks/useForm"
+import FormFields from "./FormFields"
 
 const StyledPaper = styled(Paper)<PaperProps>(({ theme }) => ({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
   padding: "30px",
-  marginTop: "30px",
-  marginBottom: "30px",
-  maxWidth: "400px",
+  margin: "30px",
+  maxWidth: "350px",
   background: theme.palette.background.default,
-  elevation: 3,
+}))
+
+const StyledBox = styled(Box)(() => ({
+  display: "flex",
+  alignItems: "center",
+  width: "100%",
+}))
+
+const StyledContainer = styled(Container)<ContainerProps>(() => ({
+  display: "flex",
+  alignItems: "center",
+  flexDirection: "column",
 }))
 
 const initState = {
@@ -32,16 +48,16 @@ const initState = {
 }
 
 export default function Login() {
-  const navigate = useNavigate()
   const { formState, handleFormChanges } = useForm(initState)
-  const {
-    user,
-    loading,
-    signInWithEmailAndPassword,
-    signInWithGoogle,
-    signInLoading,
-    signInError,
-  } = useFirebaseAuth()
+
+  const [user, loading] = useAuthState(auth)
+
+  const [signInWithGoogle, , googleLoading, googleError] =
+    useSignInWithGoogle(auth)
+  const [signInWithEmailAndPassword, , signInLoading, signInError] =
+    useSignInWithEmailAndPassword(auth)
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (loading) return
@@ -56,42 +72,55 @@ export default function Login() {
   }
 
   return (
-    <Container
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        flexDirection: "column",
-      }}
-    >
+    <StyledContainer>
       <StyledPaper elevation={3}>
-        <Typography variant="h5" component="h2">
-          Login
+        <Typography variant="h5" component="h2" align="center">
+          Sign in
         </Typography>
         <form onSubmit={handleSubmit}>
-          <GenerateFormFields {...{ formState, handleFormChanges }} />
+          <FormFields {...{ formState, handleFormChanges }} />
           <Button
             type="submit"
             variant="contained"
             fullWidth
-            sx={{ marginTop: "20px" }}
-            disabled={signInLoading}
+            sx={{ mt: "20px" }}
+            disabled={signInLoading || googleLoading}
           >
-            Login
+            Sign in
           </Button>
         </form>
+
+        <StyledBox my={2}>
+          <Divider sx={{ flex: 1 }} />
+          <Typography variant="body1" component="p" marginX={2}>
+            Or
+          </Typography>
+          <Divider sx={{ flex: 1 }} />
+        </StyledBox>
+
         <Button
           onClick={() => signInWithGoogle()}
+          startIcon={<Google />}
           variant="contained"
+          disabled={signInLoading || googleLoading}
           fullWidth
-          sx={{ marginTop: "20px" }}
         >
           Sign in with Google
         </Button>
       </StyledPaper>
-      <Link component={RouterLink} to="/register">
-        No account? Register here
-      </Link>
-      {signInError && <p>{signInError.code}</p>}
-    </Container>
+
+      <Typography variant="body2" color="error" component="p">
+        {signInError && signInError.code}
+        {googleError && googleError.code}
+      </Typography>
+
+      <Typography variant="body1" component="p">
+        No account?{" "}
+        <Link component={RouterLink} to="/register">
+          Register{" "}
+        </Link>
+        now
+      </Typography>
+    </StyledContainer>
   )
 }

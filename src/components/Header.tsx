@@ -5,14 +5,18 @@ import {
   CircularProgress,
   Container,
   IconButton,
+  Stack,
   Toolbar,
   Typography,
 } from "@mui/material"
 import { useState } from "react"
 import { Link } from "react-router-dom"
-import site from "../data/site.json"
-import useFirebaseAuth from "../hooks/useFirebaseAuth"
-import { Navigation, ThemeToggler, UserMenu } from "./"
+
+import { useAuthState } from "react-firebase-hooks/auth"
+import { auth } from "../auth/firebase"
+import { ThemeToggler, UserMenu } from "./"
+import MobileDrawer from "./ui/MobileDrawer"
+import NavLinks from "./ui/NavLinks"
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -20,24 +24,28 @@ export default function Header() {
     setMobileOpen((prevState) => !prevState)
   }
 
-  const { user, loading } = useFirebaseAuth()
+  const [user, loading] = useAuthState(auth)
 
   return (
     <header>
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
-          <Container>
-            <Toolbar>
+      <AppBar position="static">
+        <Container>
+          <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Stack direction="row" alignItems="center">
               <IconButton
                 size="large"
-                edge="start"
                 color="inherit"
+                edge="start"
                 aria-label="open drawer"
                 onClick={handleDrawerToggle}
                 sx={{ mr: 2, display: { xs: "block", sm: "none" } }}
               >
                 <MenuIcon />
               </IconButton>
+              <MobileDrawer
+                handleDrawerToggle={handleDrawerToggle}
+                mobileOpen={mobileOpen}
+              />
               <Typography
                 variant="h6"
                 component={Link}
@@ -48,43 +56,24 @@ export default function Header() {
                   marginRight: 3,
                 }}
               >
-                {site.title}
+                Countries App
               </Typography>
               <Box
                 sx={{
-                  display: { xs: "none", sm: "block", flexGrow: 1 },
+                  display: { xs: "none", sm: "block" },
                 }}
               >
-                <Navigation
-                  handleDrawerToggle={handleDrawerToggle}
-                  mobileOpen={mobileOpen}
-                />
+                <NavLinks />
               </Box>
-              <Box
-                sx={{
-                  display: { xs: "block", sm: "none", flexGrow: 1 },
-                }}
-              />
-              <Box sx={{ display: "flex", gap: "10px" }}>
-                <ThemeToggler />
-                {!loading ? (
-                  <UserMenu user={user} />
-                ) : (
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <CircularProgress />
-                  </Box>
-                )}
-              </Box>
-            </Toolbar>
-          </Container>
-        </AppBar>
-      </Box>
+            </Stack>
+
+            <Stack direction="row" gap="10px">
+              <ThemeToggler />
+              {!loading ? <UserMenu user={user} /> : <CircularProgress />}
+            </Stack>
+          </Toolbar>
+        </Container>
+      </AppBar>
     </header>
   )
 }

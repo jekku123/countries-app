@@ -1,32 +1,26 @@
 import { Box, Container, Divider, Link, Typography } from "@mui/material"
-import site from "../data/site.json"
+
+const links = ["https://restcountries.com/", "http://openweathermap.org/"]
 
 export default function Home() {
   return (
     <Container maxWidth="md">
-      <Box my="25px" px="25px">
-        <Typography variant="h3" component="h2" marginBottom={3}>
-          {site.description}
+      <Box p={2}>
+        <Typography variant="h3" component="h2" mb={3}>
+          Countries app is a simple React application made in Business College
+          Helsinki lessons.
         </Typography>
         <Divider />
-        <Typography
-          variant="subtitle1"
-          component="h3"
-          marginTop={3}
-          marginBottom={1}
-        >
-          {site.source.title}
+        <Typography variant="subtitle1" component="h3" mt={3} mb={1}>
+          App uses:
         </Typography>
-        <Box>
-          <Link href={site.source.link_1} rel="noreferrer" target="_blank">
-            {site.source.link_1}
-          </Link>
-        </Box>
-        <Box>
-          <Link href={site.source.link_1} rel="noreferrer" target="_blank">
-            {site.source.link_2}
-          </Link>
-        </Box>
+        {links.map((url: string) => (
+          <Box key={url}>
+            <Link href={url} rel="noreferrer" target="_blank">
+              {url}
+            </Link>
+          </Box>
+        ))}
       </Box>
     </Container>
   )

@@ -19,21 +19,6 @@ export default function CountriesSingle() {
     error,
   } = useGetWeatherQuery(country.capital)
 
-  if (isLoading)
-    return (
-      <Container
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <CircularProgress />
-      </Container>
-    )
-
-  if (error) return <div>Sorry, there was an error</div>
-
   return (
     <Container maxWidth="md">
       <Grid container paddingTop="20px" justifyContent={"center"} spacing={3}>
@@ -55,10 +40,16 @@ export default function CountriesSingle() {
           <Typography variant="h4" component="h3">
             {country.capital}
           </Typography>
-          {!error && weather && (
+          {error ? (
+            <Typography variant="body1" component="p">
+              Sorry, there was an error
+            </Typography>
+          ) : isLoading ? (
+            <CircularProgress />
+          ) : (
             <>
               <Typography variant="body1" component="p">
-                Right now it is <strong>{weather.main.temp}°C</strong> in
+                Right now it is <strong>{weather.main.temp}°C</strong> in{" "}
                 {country.capital} and {weather.weather[0].description}.
               </Typography>
               <img
