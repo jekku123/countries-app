@@ -3,7 +3,6 @@ import { updateProfile } from "firebase/auth"
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth"
 import * as yup from "yup"
 import { auth } from "../../auth/firebase"
-import { setUserToDatabase } from "../../firestore/db"
 import AuthForm from "./AuthForm"
 
 const initState = {
@@ -39,10 +38,6 @@ export default function Register() {
     if (!userData) return
     await updateProfile(userData.user, {
       displayName: name,
-    })
-    setUserToDatabase(userData.user, {
-      name,
-      email,
     })
   }
 
