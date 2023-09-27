@@ -1,18 +1,13 @@
-import { useAuthState } from "react-firebase-hooks/auth"
-import { Navigate, Outlet, createBrowserRouter } from "react-router-dom"
+import { createBrowserRouter } from "react-router-dom"
 import Layout from "../Layout"
-import { auth } from "../auth/firebase"
 import CountriesList from "../pages/CountriesList"
 import CountriesSingle from "../pages/CountriesSingle"
 import Home from "../pages/Home"
-import Login from "../pages/Login"
 
-import Register from "../pages/Register"
-
-const ProtectedRoute = () => {
-  const [user] = useAuthState(auth)
-  return user ? <Outlet /> : <Navigate to="/login" />
-}
+import { AuthRoute } from "../pages/Auth/AuthRoute"
+import Login from "../pages/Auth/Login"
+import Register from "../pages/Auth/Register"
+import { ProtectedRoute } from "../pages/ProtectedRoute"
 
 export const router = createBrowserRouter([
   {
@@ -20,8 +15,13 @@ export const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { index: true, element: <Home /> },
-      { path: "login", element: <Login /> },
-      { path: "register", element: <Register /> },
+      {
+        element: <AuthRoute />,
+        children: [
+          { path: "login", element: <Login /> },
+          { path: "register", element: <Register /> },
+        ],
+      },
       {
         element: <ProtectedRoute />,
         children: [
