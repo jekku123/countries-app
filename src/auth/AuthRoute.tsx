@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useAuthState } from "react-firebase-hooks/auth"
-import { auth } from "../../auth/firebase"
-import { Outlet, useNavigate } from "react-router-dom"
 import { useEffect } from "react"
+import { useAuthState } from "react-firebase-hooks/auth"
+import { Outlet, useNavigate } from "react-router-dom"
+import { auth } from "../firebase"
 
 export const AuthRoute = () => {
   const [user, loading] = useAuthState(auth)

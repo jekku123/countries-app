@@ -3,6 +3,7 @@ import {
   CircularProgress,
   Container,
   Grid,
+  Stack,
   Typography,
 } from "@mui/material"
 import { useLocation, useNavigate } from "react-router-dom"
@@ -21,7 +22,7 @@ export default function CountriesSingle() {
 
   return (
     <Container maxWidth="md">
-      <Grid container paddingTop="20px" justifyContent={"center"} spacing={3}>
+      <Grid container paddingTop="20px" justifyContent="center" spacing={3}>
         <Grid item xs={12} sm={6}>
           <img
             src={`https://source.unsplash.com/1200x800/?${country.capital}`}
@@ -47,7 +48,7 @@ export default function CountriesSingle() {
           ) : isLoading ? (
             <CircularProgress />
           ) : (
-            <>
+            <Stack direction="row" alignItems="center">
               <Typography variant="body1" component="p">
                 Right now it is <strong>{weather.main.temp}°C</strong> in{" "}
                 {country.capital} and {weather.weather[0].description}.
@@ -56,7 +57,7 @@ export default function CountriesSingle() {
                 src={`http://openweathermap.org/img/w/${weather.weather[0].icon}.png`}
                 alt={weather.weather[0].description}
               />
-            </>
+            </Stack>
           )}
         </Grid>
       </Grid>

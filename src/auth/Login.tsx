@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth"
-import { auth } from "../../auth/firebase"
+import { auth } from "../firebase"
 import AuthForm from "./AuthForm"
 
-const initState = {
+const initialValues = {
   email: "",
   password: "",
 }
 
-type FormState = typeof initState
+type FormState = typeof initialValues
 
 export default function Login() {
   const [signInWithEmailAndPassword, , loading, error] =
@@ -23,7 +23,7 @@ export default function Login() {
   return (
     <AuthForm
       {...{
-        initState,
+        initialValues,
         onSubmit,
         loading,
         error,

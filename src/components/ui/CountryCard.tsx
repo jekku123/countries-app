@@ -5,7 +5,7 @@ import {
   LocationCity,
   People,
 } from "@mui/icons-material"
-import { Box, CardActionArea, styled } from "@mui/material"
+import { Box, CardActionArea, Checkbox, styled } from "@mui/material"
 import Card from "@mui/material/Card"
 import CardContent from "@mui/material/CardContent"
 import CardMedia from "@mui/material/CardMedia"
@@ -44,12 +44,11 @@ export default function CountryCard({ country }: CountryCardProps) {
     }, 500)
   }
 
-  const handleFavoriteClick = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-  ) => {
-    e.stopPropagation()
-    setFavorite(!favorite)
-  }
+  const handleFavoriteClick =
+    (name: string) => (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      e.stopPropagation()
+      setFavorite(!favorite)
+    }
 
   return (
     <Card raised>
@@ -65,12 +64,12 @@ export default function CountryCard({ country }: CountryCardProps) {
             <Typography variant="h5" component="h2">
               {country.name.common}
             </Typography>
-            <Box onClick={handleFavoriteClick}>
-              {favorite ? (
-                <Favorite fontSize="large" color="error" />
-              ) : (
-                <FavoriteBorder fontSize="large" />
-              )}
+            <Box onClick={handleFavoriteClick(country.name.common)}>
+              <Checkbox
+                icon={<FavoriteBorder fontSize="large" />}
+                checkedIcon={<Favorite fontSize="large" color="error" />}
+                checked={favorite}
+              />
             </Box>
           </StyledBox>
           <StyledBox>

@@ -4,10 +4,11 @@ import CountriesList from "../pages/CountriesList"
 import CountriesSingle from "../pages/CountriesSingle"
 import Home from "../pages/Home"
 
-import { AuthRoute } from "../pages/Auth/AuthRoute"
-import Login from "../pages/Auth/Login"
-import Register from "../pages/Auth/Register"
-import { ProtectedRoute } from "../pages/ProtectedRoute"
+import { AuthRoute } from "../auth/AuthRoute"
+import Login from "../auth/Login"
+import { ProtectedRoute } from "../auth/ProtectedRoute"
+import Register from "../auth/Register"
+import Profile from "../pages/Profile"
 
 export const router = createBrowserRouter([
   {
@@ -25,13 +26,9 @@ export const router = createBrowserRouter([
       {
         element: <ProtectedRoute />,
         children: [
-          {
-            path: "/countries",
-            children: [
-              { index: true, element: <CountriesList /> },
-              { path: ":single", element: <CountriesSingle /> },
-            ],
-          },
+          { path: "countries", element: <CountriesList /> },
+          { path: "countries/:single", element: <CountriesSingle /> },
+          { path: "profile", element: <Profile /> },
         ],
       },
     ],

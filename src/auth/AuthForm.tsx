@@ -19,7 +19,7 @@ import {
 import { useFormik } from "formik"
 import { useSignInWithGoogle } from "react-firebase-hooks/auth"
 import { Link as RouterLink, useLocation } from "react-router-dom"
-import { auth } from "../../auth/firebase"
+import { auth } from "../firebase"
 
 const StyledPaper = styled(Paper)<PaperProps>(({ theme }) => ({
   padding: "30px",
@@ -42,7 +42,7 @@ const StyledContainer = styled(Container)<ContainerProps>(() => ({
 }))
 
 export default function AuthForm({
-  initState,
+  initialValues,
   onSubmit,
   validationSchema,
   loading,
@@ -52,8 +52,8 @@ export default function AuthForm({
 
   const { values, touched, errors, handleBlur, handleChange, handleSubmit } =
     useFormik({
-      initialValues: initState,
-      validationSchema: validationSchema,
+      initialValues,
+      validationSchema,
       onSubmit,
     })
 

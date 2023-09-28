@@ -2,16 +2,16 @@
 import { updateProfile } from "firebase/auth"
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth"
 import * as yup from "yup"
-import { auth } from "../../auth/firebase"
+import { auth } from "../firebase"
 import AuthForm from "./AuthForm"
 
-const initState = {
+const initialValues = {
   name: "",
   email: "",
   password: "",
 }
 
-type FormState = typeof initState
+type FormState = typeof initialValues
 
 const validationSchema = yup.object({
   name: yup
@@ -44,7 +44,7 @@ export default function Register() {
   return (
     <AuthForm
       {...{
-        initState,
+        initialValues,
         onSubmit,
         validationSchema,
         loading,

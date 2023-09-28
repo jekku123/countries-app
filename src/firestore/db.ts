@@ -1,6 +1,6 @@
 import { User } from "firebase/auth"
 import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore"
-import { db } from "../auth/firebase"
+import { db } from "../firebase"
 
 type FormState = {
   [key: string]: string

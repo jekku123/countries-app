@@ -12,7 +12,7 @@ import { User } from "firebase/auth"
 import { useState } from "react"
 import { useSignOut } from "react-firebase-hooks/auth"
 import { useNavigate } from "react-router-dom"
-import { auth } from "../../auth/firebase"
+import { auth } from "../../firebase"
 
 export default function UserMenu({ user }: { user: User | null | undefined }) {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
@@ -67,11 +67,21 @@ export default function UserMenu({ user }: { user: User | null | undefined }) {
             </MenuItem>
           </Box>
         ) : (
-          <MenuItem onClick={handleCloseUserMenu}>
-            <Typography textAlign="center" onClick={() => navigate("/login")}>
-              Login
-            </Typography>
-          </MenuItem>
+          <>
+            <MenuItem onClick={handleCloseUserMenu}>
+              <Typography textAlign="center" onClick={() => navigate("/login")}>
+                Login
+              </Typography>
+            </MenuItem>
+            <MenuItem onClick={handleCloseUserMenu}>
+              <Typography
+                textAlign="center"
+                onClick={() => navigate("/register")}
+              >
+                Sign up
+              </Typography>
+            </MenuItem>
+          </>
         )}
       </Menu>
     </>

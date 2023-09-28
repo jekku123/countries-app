@@ -31,6 +31,7 @@ export default function NavLinks() {
               textAlign: "center",
               textDecoration:
                 pathname === item.to ? "underline !important" : "none",
+              borderRadius: { xs: "0", sm: 10 },
             }}
           >
             <ListItemText primary={item.label} />
