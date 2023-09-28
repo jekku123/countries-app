@@ -23,10 +23,11 @@ const StyledBox = styled(Box)(() => ({
   alignItems: "center",
   gap: "0.5rem",
   marginBottom: "0.3rem",
+  paddingLeft: "1rem",
 }))
 
 const imageStyle = {
-  height: "10rem",
+  height: "12rem",
   width: "100%",
   objectFit: "fill",
 }

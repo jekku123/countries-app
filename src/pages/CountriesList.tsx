@@ -21,7 +21,7 @@ export default function CountriesList() {
   if (error) return <div>There was an error</div>
 
   return (
-    <StyledContainer maxWidth="md" sx={{ my: 5 }}>
+    <StyledContainer maxWidth="lg" sx={{ pt: 5 }}>
       <Box marginBottom={5}>
         <SearchSelect countries={countries} handleSearch={handleSearch} />
       </Box>

@@ -1,11 +1,4 @@
-import {
-  Button,
-  CircularProgress,
-  Container,
-  Grid,
-  Stack,
-  Typography,
-} from "@mui/material"
+import { Box, Button, CircularProgress, Stack, Typography } from "@mui/material"
 import { useLocation, useNavigate } from "react-router-dom"
 import { useGetWeatherQuery } from "../services/weatherApi"
 
@@ -21,19 +14,19 @@ export default function CountriesSingle() {
   } = useGetWeatherQuery(country.capital)
 
   return (
-    <Container maxWidth="md">
-      <Grid container paddingTop="20px" justifyContent="center" spacing={3}>
-        <Grid item xs={12} sm={6}>
-          <img
-            src={`https://source.unsplash.com/1200x800/?${country.capital}`}
-            alt={country.capital}
-            style={{
-              width: "100%",
-              objectFit: "contain",
-            }}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
+    <Box pt={5}>
+      <Stack direction="row" gap={3} justifyContent="center">
+        <img
+          src={`https://source.unsplash.com/1200x800/?${country.capital}`}
+          alt={country.capital}
+          style={{
+            height: "300px",
+            objectFit: "contain",
+            borderRadius: "5px",
+          }}
+        />
+
+        <Stack justifyContent="space-between">
           <Typography variant="h2" component="h2">
             {country.name.common}
           </Typography>
@@ -41,9 +34,10 @@ export default function CountriesSingle() {
           <Typography variant="h4" component="h3">
             {country.capital}
           </Typography>
+
           {error ? (
             <Typography variant="body1" component="p">
-              Sorry, there was an error
+              Sorry, cant get weather data
             </Typography>
           ) : isLoading ? (
             <CircularProgress />
@@ -59,11 +53,17 @@ export default function CountriesSingle() {
               />
             </Stack>
           )}
-        </Grid>
-      </Grid>
-      <Button onClick={() => navigate("/")} variant="contained" color="primary">
-        Go back
-      </Button>
-    </Container>
+          <Box>
+            <Button
+              onClick={() => navigate("/")}
+              variant="contained"
+              color="primary"
+            >
+              Go back
+            </Button>
+          </Box>
+        </Stack>
+      </Stack>
+    </Box>
   )
 }

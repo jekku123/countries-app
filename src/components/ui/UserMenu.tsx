@@ -67,7 +67,7 @@ export default function UserMenu({ user }: { user: User | null | undefined }) {
             </MenuItem>
           </Box>
         ) : (
-          <>
+          <Box>
             <MenuItem onClick={handleCloseUserMenu}>
               <Typography textAlign="center" onClick={() => navigate("/login")}>
                 Login
@@ -81,7 +81,7 @@ export default function UserMenu({ user }: { user: User | null | undefined }) {
                 Sign up
               </Typography>
             </MenuItem>
-          </>
+          </Box>
         )}
       </Menu>
     </>
