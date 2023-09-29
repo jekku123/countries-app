@@ -37,8 +37,11 @@ export default function CountriesList() {
     getFavorites()
   }, [user, favorites])
 
-  const handleSearch = (e: React.SyntheticEvent<Element, Event>) => {
-    setSearch((e.target as HTMLInputElement).value)
+  const handleSearch = (
+    _e: React.SyntheticEvent<Element, Event>,
+    value: string,
+  ) => {
+    setSearch(value)
   }
 
   return (

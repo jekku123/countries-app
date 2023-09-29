@@ -5,7 +5,10 @@ import { ICountry } from "../../services/countriesApi"
 
 interface SearchSelectProps {
   countries?: ICountry[]
-  handleSearch: (e: React.SyntheticEvent<Element, Event>) => void
+  handleSearch: (
+    _e: React.SyntheticEvent<Element, Event>,
+    value: string,
+  ) => void
 }
 
 export default function SearchSelect({
