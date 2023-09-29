@@ -9,6 +9,7 @@ import Login from "../auth/Login"
 import { ProtectedRoute } from "../auth/ProtectedRoute"
 import Register from "../auth/Register"
 import Profile from "../pages/Profile"
+import Favorites from "../pages/Favorites"
 
 export const router = createBrowserRouter([
   {
@@ -28,6 +29,7 @@ export const router = createBrowserRouter([
         children: [
           { path: "countries", element: <CountriesList /> },
           { path: "countries/:single", element: <CountriesSingle /> },
+          { path: "favorites", element: <Favorites /> },
           { path: "profile", element: <Profile /> },
         ],
       },

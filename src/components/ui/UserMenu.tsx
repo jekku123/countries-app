@@ -1,6 +1,11 @@
 import {
   Avatar,
   Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
   Divider,
   IconButton,
   Menu,
@@ -16,12 +21,19 @@ import { auth } from "../../firebase"
 
 export default function UserMenu({ user }: { user: User | null | undefined }) {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
+  const [open, setOpen] = useState(false)
   const handleOpenUserMenu = (e: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(e.currentTarget)
   }
   const handleCloseUserMenu = () => {
     setAnchorElUser(null)
   }
+
+  const handleLogout = () => {
+    setOpen(false)
+    signOut()
+  }
+
   const [signOut] = useSignOut(auth)
   const navigate = useNavigate()
 
@@ -63,7 +75,7 @@ export default function UserMenu({ user }: { user: User | null | undefined }) {
               </Typography>
             </MenuItem>
             <MenuItem onClick={handleCloseUserMenu}>
-              <Typography onClick={signOut}>Logout</Typography>
+              <Typography onClick={() => setOpen(true)}>Logout</Typography>
             </MenuItem>
           </Box>
         ) : (
@@ -84,6 +96,19 @@ export default function UserMenu({ user }: { user: User | null | undefined }) {
           </Box>
         )}
       </Menu>
+      <Dialog open={open} onClose={() => setOpen(false)}>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to logout?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleLogout}>Yes</Button>
+          <Button onClick={() => setOpen(false)} autoFocus>
+            No
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   )
 }

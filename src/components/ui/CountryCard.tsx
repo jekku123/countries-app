@@ -5,17 +5,20 @@ import {
   LocationCity,
   People,
 } from "@mui/icons-material"
-import { Box, CardActionArea, Checkbox, styled } from "@mui/material"
+import { Box, CardActionArea, styled } from "@mui/material"
 import Card from "@mui/material/Card"
 import CardContent from "@mui/material/CardContent"
 import CardMedia from "@mui/material/CardMedia"
 import Typography from "@mui/material/Typography"
-import { useState } from "react"
+import { User } from "firebase/auth"
 import { useNavigate } from "react-router-dom"
+import { updateUserFavorites } from "../../firestore/db"
 import { ICountry } from "../../services/countriesApi"
 
 interface CountryCardProps {
   country: ICountry
+  user: User
+  favorites: any
 }
 
 const StyledBox = styled(Box)(() => ({
@@ -23,7 +26,6 @@ const StyledBox = styled(Box)(() => ({
   alignItems: "center",
   gap: "0.5rem",
   marginBottom: "0.3rem",
-  paddingLeft: "1rem",
 }))
 
 const imageStyle = {
@@ -32,8 +34,11 @@ const imageStyle = {
   objectFit: "fill",
 }
 
-export default function CountryCard({ country }: CountryCardProps) {
-  const [favorite, setFavorite] = useState(false)
+export default function CountryCard({
+  country,
+  user,
+  favorites,
+}: CountryCardProps) {
   const navigate = useNavigate()
 
   const handleCardClick = (
@@ -46,9 +51,11 @@ export default function CountryCard({ country }: CountryCardProps) {
   }
 
   const handleFavoriteClick =
-    (name: string) => (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    (countryName: string) =>
+    async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
       e.stopPropagation()
-      setFavorite(!favorite)
+      if (!user) return
+      await updateUserFavorites(user, countryName)
     }
 
   return (
@@ -66,11 +73,13 @@ export default function CountryCard({ country }: CountryCardProps) {
               {country.name.common}
             </Typography>
             <Box onClick={handleFavoriteClick(country.name.common)}>
-              <Checkbox
-                icon={<FavoriteBorder fontSize="large" />}
-                checkedIcon={<Favorite fontSize="large" color="error" />}
-                checked={favorite}
-              />
+              {favorites.some(
+                (el: any) => el.data.countryName === country.name.common,
+              ) ? (
+                <Favorite fontSize="large" color="error" />
+              ) : (
+                <FavoriteBorder fontSize="large" />
+              )}
             </Box>
           </StyledBox>
           <StyledBox>

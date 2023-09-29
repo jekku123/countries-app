@@ -1,8 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Google } from "@mui/icons-material"
 import {
+  Backdrop,
   Box,
   Button,
+  CircularProgress,
   Container,
   ContainerProps,
   Divider,
@@ -66,7 +68,14 @@ export default function AuthForm({
         <Typography variant="h5" component="h2" align="center">
           {isRegister ? "Sign up" : "Login"}
         </Typography>
-        <form onSubmit={handleSubmit}>
+        <form
+          onSubmit={handleSubmit}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleSubmit()
+            }
+          }}
+        >
           {Object.keys(values).map((fieldname, i) => (
             <FormControl
               key={fieldname}
@@ -149,6 +158,13 @@ export default function AuthForm({
           {error.code}
         </Typography>
       )}
+
+      <Backdrop
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading || googleLoading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </StyledContainer>
   )
 }

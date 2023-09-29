@@ -10,6 +10,10 @@ const navLinks = [
     label: "Countries",
     to: "/countries",
   },
+  {
+    label: "Favorites",
+    to: "/favorites",
+  },
 ]
 
 export default function NavLinks() {

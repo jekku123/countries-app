@@ -13,10 +13,10 @@ const StyledContainer = styled(Container)(() => ({
   alignItems: "center",
 }))
 
-export default function CountriesList() {
+export default function Favorites() {
   const { data: countries, isLoading, error } = useGetCountriesQuery()
-  const [user] = useAuthState(auth)
   const [search, setSearch] = useState("")
+  const [user] = useAuthState(auth)
   const [favorites, setFavorites] = useState([])
 
   useEffect(() => {
@@ -32,10 +32,19 @@ export default function CountriesList() {
     setSearch((e.target as HTMLInputElement).value)
   }
 
+  const favoriteCountries = countries?.filter((country: ICountry) =>
+    favorites?.some(
+      (favorite: any) => favorite.data.countryName === country.name.common,
+    ),
+  )
+
   return (
     <StyledContainer maxWidth="lg" sx={{ pt: 5 }}>
       <Box marginBottom={5}>
-        <SearchSelect countries={countries} handleSearch={handleSearch} />
+        <SearchSelect
+          countries={favoriteCountries}
+          handleSearch={handleSearch}
+        />
       </Box>
       {error ? (
         <Box>Sorry, there was an error</Box>
@@ -44,7 +53,7 @@ export default function CountriesList() {
       ) : (
         <Grid container spacing={5} px="20px" justifyContent={"center"}>
           {user &&
-            countries?.reduce(
+            favoriteCountries?.reduce(
               (prev: JSX.Element[], country: ICountry) =>
                 country.name?.common
                   ?.toLowerCase()
