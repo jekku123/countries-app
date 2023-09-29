@@ -17,6 +17,15 @@ type FormState = {
   [key: string]: string
 }
 
+type Favorite = {
+  uid: string
+  data: {
+    userId: string
+    countryName: string
+    authProvider: string
+  }
+}
+
 export const setUserToDatabase = async (user: User, userData: FormState) => {
   if (!user) return
   try {
@@ -45,25 +54,30 @@ export const getUserFromDatabase = async (user: User) => {
   }
 }
 
-export const getUserFavorites = async (user: User): Promise<[]> => {
+export const getUserFavorites = async (user: User) => {
   if (!user) return []
   const q = query(collection(db, "favorites"), where("userId", "==", user.uid))
   const querySnapshot = await getDocs(q)
-  const favorites: any = []
+  const favorites: Favorite[] = []
+
   querySnapshot.forEach((doc) => {
-    favorites.push({ uid: doc.id, data: doc.data() })
+    const favoriteData = doc.data() as {
+      userId: string
+      countryName: string
+      authProvider: string
+    }
+    favorites.push({ uid: doc.id, data: favoriteData })
   })
+
   return favorites
 }
 
 export const updateUserFavorites = async (user: User, countryName: string) => {
   if (!user) return
-  const favorites: any = await getUserFavorites(user)
-  if (
-    favorites.some((favorite: any) => favorite.data.countryName === countryName)
-  ) {
+  const favorites: Favorite[] = await getUserFavorites(user)
+  if (favorites.some((favorite) => favorite.data.countryName === countryName)) {
     const index = favorites.findIndex(
-      (favorite: any) => favorite.data.countryName === countryName,
+      (favorite) => favorite.data.countryName === countryName,
     )
     try {
       await deleteDoc(doc(db, "favorites", favorites[index].uid))

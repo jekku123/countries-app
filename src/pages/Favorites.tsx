@@ -6,6 +6,15 @@ import { auth } from "../firebase"
 import { getUserFavorites } from "../firestore/db"
 import { ICountry, useGetCountriesQuery } from "../services/countriesApi"
 
+type Favorite = {
+  uid: string
+  data: {
+    userId: string
+    countryName: string
+    authProvider: string
+  }
+}
+
 const StyledContainer = styled(Container)(() => ({
   display: "flex",
   flexDirection: "column",
@@ -17,7 +26,7 @@ export default function Favorites() {
   const { data: countries, isLoading, error } = useGetCountriesQuery()
   const [search, setSearch] = useState("")
   const [user] = useAuthState(auth)
-  const [favorites, setFavorites] = useState([])
+  const [favorites, setFavorites] = useState<Favorite[]>([])
 
   useEffect(() => {
     if (!user) return
