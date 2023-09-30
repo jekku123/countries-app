@@ -41,12 +41,12 @@ export default function UserMenu({ user }: { user: User | null | undefined }) {
     <>
       <Tooltip title="User settings">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Avatar alt="Avatar" src={user?.photoURL ?? ""} />
+          <Avatar alt="User" src={user?.photoURL ?? ""} />
         </IconButton>
       </Tooltip>
       <Menu
         sx={{ mt: "45px" }}
-        id="menu-appbar"
+        id="user-menu"
         anchorEl={anchorElUser}
         anchorOrigin={{
           vertical: "top",
@@ -64,9 +64,7 @@ export default function UserMenu({ user }: { user: User | null | undefined }) {
         {user ? (
           <Box>
             <MenuItem>
-              <Typography component="strong">
-                {user.displayName ?? user.email}
-              </Typography>
+              <Typography component="strong">{user.displayName}</Typography>
             </MenuItem>
             <Divider />
             <MenuItem onClick={handleCloseUserMenu}>

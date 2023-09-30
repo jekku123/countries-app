@@ -35,6 +35,7 @@ export default function Register() {
   const onSubmit = async (values: FormState) => {
     const { name, email, password } = values
     const userData = await createUserWithEmailAndPassword(email, password)
+
     if (!userData) return
     await updateProfile(userData.user, {
       displayName: name,

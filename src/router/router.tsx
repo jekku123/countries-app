@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom"
 import Layout from "../Layout"
-import CountriesList from "../pages/CountriesList"
 import CountriesSingle from "../pages/CountriesSingle"
 import Home from "../pages/Home"
 
@@ -8,8 +7,8 @@ import { AuthRoute } from "../auth/AuthRoute"
 import Login from "../auth/Login"
 import { ProtectedRoute } from "../auth/ProtectedRoute"
 import Register from "../auth/Register"
+import CountryList from "../pages/CountryList"
 import Profile from "../pages/Profile"
-import Favorites from "../pages/Favorites"
 
 export const router = createBrowserRouter([
   {
@@ -27,9 +26,9 @@ export const router = createBrowserRouter([
       {
         element: <ProtectedRoute />,
         children: [
-          { path: "countries", element: <CountriesList /> },
+          { path: "countries", element: <CountryList /> },
           { path: "countries/:single", element: <CountriesSingle /> },
-          { path: "favorites", element: <Favorites /> },
+          { path: "favorites", element: <CountryList /> },
           { path: "profile", element: <Profile /> },
         ],
       },

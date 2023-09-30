@@ -20,6 +20,7 @@ export default function Profile() {
           src={user?.photoURL ?? ""}
           sx={{ width: "150px", height: "150px", m: 2 }}
         />
+
         <Typography component="h2" variant="h5" gutterBottom>
           {user?.displayName ?? user?.email}
         </Typography>

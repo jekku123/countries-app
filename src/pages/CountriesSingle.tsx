@@ -1,6 +1,23 @@
-import { Box, Button, CircularProgress, Stack, Typography } from "@mui/material"
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Container,
+  Paper,
+  PaperProps,
+  Stack,
+  Typography,
+  styled,
+} from "@mui/material"
+import { useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import { useGetWeatherQuery } from "../services/weatherApi"
+
+const StyledPaper = styled(Paper)<PaperProps>(({ theme }) => ({
+  background: theme.palette.background.default,
+  padding: "20px 30px 30px 30px",
+  margin: "30px 0",
+}))
 
 export default function CountriesSingle() {
   const navigate = useNavigate()
@@ -13,57 +30,70 @@ export default function CountriesSingle() {
     error,
   } = useGetWeatherQuery(country.capital)
 
+  const [imageLoading, setImageLoading] = useState(true)
+
   return (
-    <Box pt={5}>
-      <Stack direction="row" gap={3} justifyContent="center">
-        <img
-          src={`https://source.unsplash.com/1200x800/?${country.capital}`}
-          alt={country.capital}
-          style={{
-            height: "300px",
-            objectFit: "contain",
-            borderRadius: "5px",
-          }}
-        />
+    <Container maxWidth="md">
+      <StyledPaper elevation={3}>
+        <Typography variant="h2" component="h2" gutterBottom>
+          {country.name.common}
+        </Typography>
 
-        <Stack justifyContent="space-between">
-          <Typography variant="h2" component="h2">
-            {country.name.common}
-          </Typography>
+        <Stack direction={{ xs: "column", sm: "row" }} gap={3}>
+          <img
+            src={`https://source.unsplash.com/1200x800/?${country.capital}`}
+            alt={country.capital}
+            style={{
+              maxHeight: "300px",
+              objectFit: "contain",
+              borderRadius: "5px",
+            }}
+          />
+          {/* <Skeleton
+            sx={{ borderRadius: "5px" }}
+            variant="rectangular"
+            width="100%"
+            height={"300px"}
+            animation="wave"
+          /> */}
 
-          <Typography variant="h4" component="h3">
-            {country.capital}
-          </Typography>
-
-          {error ? (
-            <Typography variant="body1" component="p">
-              Sorry, cant get weather data
-            </Typography>
-          ) : isLoading ? (
-            <CircularProgress />
-          ) : (
-            <Stack direction="row" alignItems="center">
-              <Typography variant="body1" component="p">
-                Right now it is <strong>{weather.main.temp}°C</strong> in{" "}
-                {country.capital} and {weather.weather[0].description}.
+          <Stack justifyContent="space-between">
+            <Box>
+              <Typography variant="h4" component="h3" gutterBottom>
+                {country.capital}
               </Typography>
-              <img
-                src={`http://openweathermap.org/img/w/${weather.weather[0].icon}.png`}
-                alt={weather.weather[0].description}
-              />
-            </Stack>
-          )}
-          <Box>
-            <Button
-              onClick={() => navigate("/")}
-              variant="contained"
-              color="primary"
-            >
-              Go back
-            </Button>
-          </Box>
+
+              {error ? (
+                <Typography variant="body1" component="p">
+                  Sorry, cant get weather data
+                </Typography>
+              ) : isLoading ? (
+                <CircularProgress />
+              ) : (
+                <Stack direction="row" alignItems="center">
+                  <Typography variant="body1" component="p">
+                    Right now it is <strong>{weather.main.temp}°C</strong> in{" "}
+                    {country.capital} and {weather.weather[0].description}.
+                  </Typography>
+                  <img
+                    src={`http://openweathermap.org/img/w/${weather.weather[0].icon}.png`}
+                    alt={weather.weather[0].description}
+                  />
+                </Stack>
+              )}
+            </Box>
+          </Stack>
         </Stack>
-      </Stack>
-    </Box>
+
+        <Button
+          onClick={() => navigate("/")}
+          variant="contained"
+          color="primary"
+          sx={{ mt: 3 }}
+        >
+          Go back
+        </Button>
+      </StyledPaper>
+    </Container>
   )
 }
