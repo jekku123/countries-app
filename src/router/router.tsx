@@ -7,7 +7,8 @@ import { AuthRoute } from "../auth/AuthRoute"
 import Login from "../auth/Login"
 import { ProtectedRoute } from "../auth/ProtectedRoute"
 import Register from "../auth/Register"
-import CountryList from "../pages/CountryList"
+import CountriesList from "../pages/CountriesList"
+import Favorites from "../pages/Favorites"
 import Profile from "../pages/Profile"
 
 export const router = createBrowserRouter([
@@ -26,9 +27,9 @@ export const router = createBrowserRouter([
       {
         element: <ProtectedRoute />,
         children: [
-          { path: "countries", element: <CountryList /> },
+          { path: "countries", element: <CountriesList /> },
           { path: "countries/:single", element: <CountriesSingle /> },
-          { path: "favorites", element: <CountryList /> },
+          { path: "favorites", element: <Favorites /> },
           { path: "profile", element: <Profile /> },
         ],
       },

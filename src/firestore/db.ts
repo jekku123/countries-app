@@ -17,7 +17,7 @@ type FormState = {
   [key: string]: string
 }
 
-type Favorite = {
+export type FavoriteType = {
   uid: string
   data: {
     userId: string
@@ -58,7 +58,7 @@ export const getUserFavorites = async (user: User) => {
   if (!user) return []
   const q = query(collection(db, "favorites"), where("userId", "==", user.uid))
   const querySnapshot = await getDocs(q)
-  const favorites: Favorite[] = []
+  const favorites: FavoriteType[] = []
 
   querySnapshot.forEach((doc) => {
     const favoriteData = doc.data() as {
@@ -74,7 +74,7 @@ export const getUserFavorites = async (user: User) => {
 
 export const updateUserFavorites = async (user: User, countryName: string) => {
   if (!user) return
-  const favorites: Favorite[] = await getUserFavorites(user)
+  const favorites: FavoriteType[] = await getUserFavorites(user)
   if (favorites.some((favorite) => favorite.data.countryName === countryName)) {
     const index = favorites.findIndex(
       (favorite) => favorite.data.countryName === countryName,

@@ -12,7 +12,7 @@ import CardMedia from "@mui/material/CardMedia"
 import Typography from "@mui/material/Typography"
 import { User } from "firebase/auth"
 import { useNavigate } from "react-router-dom"
-import { updateUserFavorites } from "../../firestore/db"
+import { FavoriteType, updateUserFavorites } from "../../firestore/db"
 import { ICountry } from "../../services/countriesApi"
 
 interface CountryCardProps {
@@ -74,7 +74,8 @@ export default function CountryCard({
             </Typography>
             <Box onClick={handleFavoriteClick(country.name.common)}>
               {favorites.some(
-                (el: any) => el.data.countryName === country.name.common,
+                (el: FavoriteType) =>
+                  el.data.countryName === country.name.common,
               ) ? (
                 <Favorite fontSize="large" color="error" />
               ) : (

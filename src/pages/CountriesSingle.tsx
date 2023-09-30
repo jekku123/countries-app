@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/iframe-has-title */
 import {
   Box,
   Button,
@@ -9,9 +10,10 @@ import {
   Typography,
   styled,
 } from "@mui/material"
-import { useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import { useGetWeatherQuery } from "../services/weatherApi"
+
+const NOT_SO_SECRET_MAP_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_KEY
 
 const StyledPaper = styled(Paper)<PaperProps>(({ theme }) => ({
   background: theme.palette.background.default,
@@ -30,8 +32,6 @@ export default function CountriesSingle() {
     error,
   } = useGetWeatherQuery(country.capital)
 
-  const [imageLoading, setImageLoading] = useState(true)
-
   return (
     <Container maxWidth="md">
       <StyledPaper elevation={3}>
@@ -49,40 +49,41 @@ export default function CountriesSingle() {
               borderRadius: "5px",
             }}
           />
-          {/* <Skeleton
-            sx={{ borderRadius: "5px" }}
-            variant="rectangular"
-            width="100%"
-            height={"300px"}
-            animation="wave"
-          /> */}
 
-          <Stack justifyContent="space-between">
-            <Box>
-              <Typography variant="h4" component="h3" gutterBottom>
-                {country.capital}
+          <Box>
+            <Typography variant="h4" component="h3" gutterBottom>
+              {country.capital}
+            </Typography>
+
+            {error ? (
+              <Typography variant="body1" component="p">
+                Sorry, cant get weather data
               </Typography>
-
-              {error ? (
+            ) : isLoading ? (
+              <CircularProgress />
+            ) : (
+              <Stack direction="row" alignItems="center">
                 <Typography variant="body1" component="p">
-                  Sorry, cant get weather data
+                  Right now it is <strong>{weather.main.temp}°C</strong> in{" "}
+                  {country.capital} and {weather.weather[0].description}.
                 </Typography>
-              ) : isLoading ? (
-                <CircularProgress />
-              ) : (
-                <Stack direction="row" alignItems="center">
-                  <Typography variant="body1" component="p">
-                    Right now it is <strong>{weather.main.temp}°C</strong> in{" "}
-                    {country.capital} and {weather.weather[0].description}.
-                  </Typography>
-                  <img
-                    src={`http://openweathermap.org/img/w/${weather.weather[0].icon}.png`}
-                    alt={weather.weather[0].description}
-                  />
-                </Stack>
-              )}
-            </Box>
-          </Stack>
+                <img
+                  src={`http://openweathermap.org/img/w/${weather.weather[0].icon}.png`}
+                  alt={weather.weather[0].description}
+                />
+              </Stack>
+            )}
+            <iframe
+              style={{ borderRadius: "5px", border: "none" }}
+              width="100%"
+              height={200}
+              loading="lazy"
+              allowFullScreen
+              referrerPolicy="no-referrer-when-downgrade"
+              src={`https://www.google.com/maps/embed/v1/place?key=${NOT_SO_SECRET_MAP_API_KEY}
+    &q=${country.name.common}`}
+            />
+          </Box>
         </Stack>
 
         <Button

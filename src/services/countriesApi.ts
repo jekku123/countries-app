@@ -18,6 +18,9 @@ export interface ICountry {
       symbol: string
     }
   }
+  maps: {
+    googleMaps: string
+  }
 }
 
 export const countriesApi = createApi({

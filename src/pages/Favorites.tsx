@@ -1,7 +1,6 @@
 import { Box, Container, Grid, styled } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
-import { useLocation } from "react-router-dom"
 import { CountryCard, SearchSelect, SkeletonGrid } from "../components"
 import { auth } from "../firebase"
 import { getUserFavorites } from "../firestore/db"
@@ -23,14 +22,11 @@ const StyledContainer = styled(Container)(() => ({
   alignItems: "center",
 }))
 
-export default function CountryList() {
+export default function Favorites() {
   const { data: countries, isLoading, error } = useGetCountriesQuery()
-  const [user] = useAuthState(auth)
   const [search, setSearch] = useState("")
+  const [user] = useAuthState(auth)
   const [favorites, setFavorites] = useState<Favorite[]>([])
-  const { pathname } = useLocation()
-
-  const showFavorites = pathname === "/favorites"
 
   useEffect(() => {
     if (!user) return
@@ -48,18 +44,19 @@ export default function CountryList() {
     setSearch(value)
   }
 
-  const filteredCountries: ICountry[] | undefined = showFavorites
-    ? countries?.filter((country: ICountry) =>
-        favorites?.some(
-          (favorite) => favorite.data.countryName === country.name.common,
-        ),
-      )
-    : countries
+  const favoriteCountries = countries?.filter((country: ICountry) =>
+    favorites?.some(
+      (favorite: any) => favorite.data.countryName === country.name.common,
+    ),
+  )
 
   return (
     <StyledContainer maxWidth="lg" sx={{ pt: 5 }}>
       <Box marginBottom={5}>
-        <SearchSelect countries={countries} handleSearch={handleSearch} />
+        <SearchSelect
+          countries={favoriteCountries}
+          handleSearch={handleSearch}
+        />
       </Box>
       {error ? (
         <Box>Sorry, there was an error</Box>
@@ -68,7 +65,7 @@ export default function CountryList() {
       ) : (
         <Grid container spacing={5} px="20px" justifyContent={"center"}>
           {user &&
-            filteredCountries?.reduce(
+            favoriteCountries?.reduce(
               (prev: JSX.Element[], country: ICountry) =>
                 country.name?.common
                   ?.toLowerCase()
