@@ -39,7 +39,7 @@ export default function CountriesSingle() {
           {country.name.common}
         </Typography>
 
-        <Stack direction={{ xs: "column", sm: "row" }} gap={3}>
+        <Stack direction={{ xs: "column", md: "row" }} gap={3}>
           <img
             src={`https://source.unsplash.com/1200x800/?${country.capital}`}
             alt={country.capital}
@@ -74,14 +74,13 @@ export default function CountriesSingle() {
               </Stack>
             )}
             <iframe
-              style={{ borderRadius: "5px", border: "none" }}
+              style={{ borderRadius: "5px", border: "none", marginTop: "20px" }}
               width="100%"
-              height={200}
+              height={176}
               loading="lazy"
               allowFullScreen
               referrerPolicy="no-referrer-when-downgrade"
-              src={`https://www.google.com/maps/embed/v1/place?key=${NOT_SO_SECRET_MAP_API_KEY}
-    &q=${country.name.common}`}
+              src={`https://www.google.com/maps/embed/v1/place?key=${NOT_SO_SECRET_MAP_API_KEY}&q=${country.name.common}`}
             />
           </Box>
         </Stack>
