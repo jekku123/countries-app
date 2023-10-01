@@ -1,19 +1,11 @@
 import { Box, Container, Grid, styled } from "@mui/material"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
+import { useLocation } from "react-router-dom"
 import { CountryCard, SearchSelect, SkeletonGrid } from "../components"
 import { auth } from "../firebase"
-import { getUserFavorites } from "../firestore/db"
 import { ICountry, useGetCountriesQuery } from "../services/countriesApi"
-
-type Favorite = {
-  uid: string
-  data: {
-    userId: string
-    countryName: string
-    authProvider: string
-  }
-}
+import { FavoriteType, useGetFavoritesQuery } from "../services/firestoreApi"
 
 const StyledContainer = styled(Container)(() => ({
   display: "flex",
@@ -23,19 +15,24 @@ const StyledContainer = styled(Container)(() => ({
 }))
 
 export default function CountriesList() {
-  const { data: countries, isLoading, error } = useGetCountriesQuery()
+  const { data, isLoading, error } = useGetCountriesQuery()
   const [user] = useAuthState(auth)
   const [search, setSearch] = useState("")
-  const [favorites, setFavorites] = useState<Favorite[]>([])
+  const { pathname } = useLocation()
+  const isFavorites = pathname === "/favorites"
 
-  useEffect(() => {
-    if (!user) return
-    const getFavorites = async () => {
-      const data = await getUserFavorites(user)
-      setFavorites(data)
-    }
-    getFavorites()
-  }, [user, favorites])
+  const { data: favorites, isLoading: favLoading } = useGetFavoritesQuery(
+    user?.uid,
+  )
+
+  const countries = isFavorites
+    ? data?.filter((country: ICountry) =>
+        favorites?.some(
+          (favorite: FavoriteType) =>
+            favorite.countryName === country.name.common,
+        ),
+      )
+    : data
 
   const handleSearch = (
     _e: React.SyntheticEvent<Element, Event>,
@@ -51,7 +48,7 @@ export default function CountriesList() {
       </Box>
       {error ? (
         <Box>Sorry, there was an error</Box>
-      ) : isLoading ? (
+      ) : isLoading || favLoading ? (
         <SkeletonGrid />
       ) : (
         <Grid container spacing={5} px="20px" justifyContent={"center"}>

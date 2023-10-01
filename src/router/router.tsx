@@ -8,7 +8,6 @@ import Login from "../auth/Login"
 import { ProtectedRoute } from "../auth/ProtectedRoute"
 import Register from "../auth/Register"
 import CountriesList from "../pages/CountriesList"
-import Favorites from "../pages/Favorites"
 import Profile from "../pages/Profile"
 
 export const router = createBrowserRouter([
@@ -29,7 +28,7 @@ export const router = createBrowserRouter([
         children: [
           { path: "countries", element: <CountriesList /> },
           { path: "countries/:single", element: <CountriesSingle /> },
-          { path: "favorites", element: <Favorites /> },
+          { path: "favorites", element: <CountriesList /> },
           { path: "profile", element: <Profile /> },
         ],
       },
