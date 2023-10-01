@@ -86,7 +86,7 @@ export default function CountriesSingle() {
         </Stack>
 
         <Button
-          onClick={() => navigate("/")}
+          onClick={() => navigate(-1)}
           variant="contained"
           color="primary"
           sx={{ mt: 3 }}

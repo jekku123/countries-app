@@ -15,15 +15,15 @@ const StyledContainer = styled(Container)(() => ({
 }))
 
 export default function CountriesList() {
-  const { data, isLoading, error } = useGetCountriesQuery()
   const [user] = useAuthState(auth)
   const [search, setSearch] = useState("")
-  const { pathname } = useLocation()
-  const isFavorites = pathname === "/favorites"
-
+  const { data, isLoading, error } = useGetCountriesQuery()
   const { data: favorites, isLoading: favLoading } = useGetFavoritesQuery(
     user?.uid,
   )
+  const { pathname } = useLocation()
+
+  const isFavorites = pathname === "/favorites"
 
   const countries = isFavorites
     ? data?.filter((country: ICountry) =>
