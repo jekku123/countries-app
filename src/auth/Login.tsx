@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth"
-import { auth } from "../firebase"
+import { auth } from "../firebase-config"
 import AuthForm from "./AuthForm"
 
 const initialValues = {

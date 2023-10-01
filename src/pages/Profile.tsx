@@ -1,6 +1,6 @@
 import { Avatar, Box, Container, Typography, styled } from "@mui/material"
 import { useAuthState } from "react-firebase-hooks/auth"
-import { auth } from "../firebase"
+import { auth } from "../firebase-config"
 
 const StyledBox = styled(Box)(() => ({
   display: "flex",

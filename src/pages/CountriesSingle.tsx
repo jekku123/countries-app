@@ -24,6 +24,7 @@ const StyledPaper = styled(Paper)<PaperProps>(({ theme }) => ({
 export default function CountriesSingle() {
   const navigate = useNavigate()
   const location = useLocation()
+
   const country = location.state.country
 
   const {

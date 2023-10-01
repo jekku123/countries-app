@@ -17,7 +17,7 @@ import { User } from "firebase/auth"
 import { useState } from "react"
 import { useSignOut } from "react-firebase-hooks/auth"
 import { useNavigate } from "react-router-dom"
-import { auth } from "../../firebase"
+import { auth } from "../../firebase-config"
 
 export default function UserMenu({ user }: { user: User | null | undefined }) {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)

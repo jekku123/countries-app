@@ -21,7 +21,7 @@ import {
 import { useFormik } from "formik"
 import { useSignInWithGoogle } from "react-firebase-hooks/auth"
 import { Link as RouterLink, useLocation } from "react-router-dom"
-import { auth } from "../firebase"
+import { auth } from "../firebase-config"
 
 const StyledPaper = styled(Paper)<PaperProps>(({ theme }) => ({
   padding: "30px",

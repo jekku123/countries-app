@@ -2,7 +2,7 @@
 import { updateProfile } from "firebase/auth"
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth"
 import * as yup from "yup"
-import { auth } from "../firebase"
+import { auth } from "../firebase-config"
 import AuthForm from "./AuthForm"
 
 const initialValues = {

@@ -3,7 +3,7 @@ import { useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { useLocation } from "react-router-dom"
 import { CountryCard, SearchSelect, SkeletonGrid } from "../components"
-import { auth } from "../firebase"
+import { auth } from "../firebase-config"
 import { ICountry, useGetCountriesQuery } from "../services/countriesApi"
 import { FavoriteType, useGetFavoritesQuery } from "../services/firestoreApi"
 

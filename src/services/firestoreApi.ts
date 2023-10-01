@@ -5,16 +5,11 @@ import {
   deleteDoc,
   doc,
   getDocs,
+  getFirestore,
   query,
   where,
 } from "firebase/firestore"
-import { db } from "../firebase"
-
-type FavoriteDataType = {
-  userId: string
-  countryName: string
-  authProvider: string
-}
+import { app } from "../firebase-config"
 
 export type FavoriteType = {
   uid: string
@@ -22,6 +17,8 @@ export type FavoriteType = {
   countryName: string
   authProvider: string
 }
+
+const db = getFirestore(app)
 
 export const firestoreApi = createApi({
   reducerPath: "firestoreApi",
@@ -39,8 +36,7 @@ export const firestoreApi = createApi({
           const querySnapshot = await getDocs(q)
           const favorites: FavoriteType[] = []
           querySnapshot.forEach((doc) => {
-            const favoriteData = doc.data() as FavoriteDataType
-            favorites.push({ uid: doc.id, ...favoriteData })
+            favorites.push({ uid: doc.id, ...doc.data() } as FavoriteType)
           })
           return { data: favorites }
         } catch (err: any) {
@@ -58,7 +54,7 @@ export const firestoreApi = createApi({
         )
         if (!fav?.uid) {
           try {
-            addDoc(collection(db, "favorites"), {
+            await addDoc(collection(db, "favorites"), {
               userId,
               countryName,
               authProvider: "local",
@@ -69,7 +65,7 @@ export const firestoreApi = createApi({
           }
         } else {
           try {
-            deleteDoc(doc(db, "favorites", fav.uid))
+            await deleteDoc(doc(db, "favorites", fav.uid))
             return { data: null }
           } catch (err: any) {
             return { error: err.message }
