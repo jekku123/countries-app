@@ -20,20 +20,14 @@ import { useNavigate } from "react-router-dom"
 import { auth } from "../../firebase-config"
 
 export default function UserMenu({ user }: { user: User | null | undefined }) {
-  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
   const [open, setOpen] = useState(false)
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
   const handleOpenUserMenu = (e: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(e.currentTarget)
   }
   const handleCloseUserMenu = () => {
     setAnchorElUser(null)
   }
-
-  const handleLogout = () => {
-    setOpen(false)
-    signOut()
-  }
-
   const [signOut] = useSignOut(auth)
   const navigate = useNavigate()
 
@@ -101,7 +95,14 @@ export default function UserMenu({ user }: { user: User | null | undefined }) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleLogout}>Yes</Button>
+          <Button
+            onClick={() => {
+              setOpen(false)
+              signOut()
+            }}
+          >
+            Yes
+          </Button>
           <Button onClick={() => setOpen(false)} autoFocus>
             No
           </Button>

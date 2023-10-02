@@ -19,12 +19,12 @@ import MobileDrawer from "./ui/MobileDrawer"
 import NavLinks from "./ui/NavLinks"
 
 export default function Header() {
+  const [user, loading] = useAuthState(auth)
   const [mobileOpen, setMobileOpen] = useState(false)
+
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState)
   }
-
-  const [user, loading] = useAuthState(auth)
 
   return (
     <header>

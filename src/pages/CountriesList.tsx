@@ -1,11 +1,11 @@
 import { Box, Container, Grid, styled } from "@mui/material"
 import { useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { CountryCard, SearchSelect, SkeletonGrid } from "../components"
 import { auth } from "../firebase-config"
+import useFavorites from "../hooks/useFavorites"
 import { ICountry, useGetCountriesQuery } from "../services/countriesApi"
-import { FavoriteType, useGetFavoritesQuery } from "../services/firestoreApi"
 
 const StyledContainer = styled(Container)(() => ({
   display: "flex",
@@ -18,19 +18,15 @@ export default function CountriesList() {
   const [user] = useAuthState(auth)
   const [search, setSearch] = useState("")
   const { data, isLoading, error } = useGetCountriesQuery()
-  const { data: favorites, isLoading: favLoading } = useGetFavoritesQuery(
-    user?.uid,
-  )
-  const { pathname } = useLocation()
+  const navigate = useNavigate()
+  const { favorites, loading: favLoading, handleFavorites } = useFavorites(user)
 
-  const isFavorites = pathname === "/favorites"
+  const location = useLocation()
+  const isFavoritesPage = location.pathname === "/favorites"
 
-  const countries = isFavorites
+  const countries = isFavoritesPage
     ? data?.filter((country: ICountry) =>
-        favorites?.some(
-          (favorite: FavoriteType) =>
-            favorite.countryName === country.name.common,
-        ),
+        favorites?.includes(country.name.common),
       )
     : data
 
@@ -40,6 +36,17 @@ export default function CountriesList() {
   ) => {
     setSearch(value)
   }
+
+  const handleCardClick =
+    (countryName: string, countryData: ICountry) =>
+    (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      e.preventDefault()
+      setTimeout(() => {
+        navigate(`/countries/${countryName}`, {
+          state: { country: countryData },
+        })
+      }, 500)
+    }
 
   return (
     <StyledContainer maxWidth="lg" sx={{ pt: 5 }}>
@@ -52,31 +59,23 @@ export default function CountriesList() {
         <SkeletonGrid />
       ) : (
         <Grid container spacing={5} px="20px" justifyContent={"center"}>
-          {user &&
-            countries?.reduce(
-              (prev: JSX.Element[], country: ICountry) =>
-                country.name?.common
-                  ?.toLowerCase()
-                  .includes(search.toLowerCase())
-                  ? [
-                      ...prev,
-                      <Grid
-                        key={country.name.common}
-                        item
-                        xs={12}
-                        sm={6}
-                        md={4}
-                      >
-                        <CountryCard
-                          country={country}
-                          user={user}
-                          favorites={favorites}
-                        />
-                      </Grid>,
-                    ]
-                  : prev,
-              [],
-            )}
+          {countries?.reduce(
+            (prevCountries: JSX.Element[], country: ICountry) =>
+              country.name?.common?.toLowerCase().includes(search.toLowerCase())
+                ? [
+                    ...prevCountries,
+                    <Grid key={country.name.common} item xs={12} sm={6} md={4}>
+                      <CountryCard
+                        country={country}
+                        favorites={favorites}
+                        handleCardClick={handleCardClick}
+                        handleFavoriteClick={handleFavorites}
+                      />
+                    </Grid>,
+                  ]
+                : prevCountries,
+            [],
+          )}
         </Grid>
       )}
     </StyledContainer>

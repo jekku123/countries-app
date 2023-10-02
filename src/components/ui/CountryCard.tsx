@@ -10,18 +10,13 @@ import Card from "@mui/material/Card"
 import CardContent from "@mui/material/CardContent"
 import CardMedia from "@mui/material/CardMedia"
 import Typography from "@mui/material/Typography"
-import { User } from "firebase/auth"
-import { useNavigate } from "react-router-dom"
 import { ICountry } from "../../services/countriesApi"
-import {
-  FavoriteType,
-  useSetFavoriteMutation,
-} from "../../services/firestoreApi"
 
 interface CountryCardProps {
   country: ICountry
-  user: User
   favorites: any
+  handleFavoriteClick: any
+  handleCardClick: any
 }
 
 const StyledBox = styled(Box)(() => ({
@@ -39,32 +34,13 @@ const imageStyle = {
 
 export default function CountryCard({
   country,
-  user,
   favorites,
+  handleCardClick,
+  handleFavoriteClick,
 }: CountryCardProps) {
-  const navigate = useNavigate()
-  const [setFavorite] = useSetFavoriteMutation()
-
-  const handleCardClick = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => {
-    e.preventDefault()
-    setTimeout(() => {
-      navigate(`/countries/${country.name.common}`, { state: { country } })
-    }, 500)
-  }
-
-  const handleFavoriteClick =
-    (countryName: string) =>
-    async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-      e.stopPropagation()
-      if (!user) return
-      setFavorite({ userId: user.uid, countryName, favorites })
-    }
-
   return (
     <Card raised>
-      <CardActionArea onClick={handleCardClick}>
+      <CardActionArea onClick={handleCardClick(country.name.common, country)}>
         <CardMedia
           component="img"
           sx={imageStyle}
@@ -77,9 +53,7 @@ export default function CountryCard({
               {country.name.common}
             </Typography>
             <Box onClick={handleFavoriteClick(country.name.common)}>
-              {favorites?.some(
-                (el: FavoriteType) => el.countryName === country.name.common,
-              ) ? (
+              {favorites?.includes(country.name.common) ? (
                 <Favorite fontSize="large" color="error" />
               ) : (
                 <FavoriteBorder fontSize="large" />
