@@ -13,8 +13,8 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 
 import { useAuthState } from "react-firebase-hooks/auth"
+import { ThemeToggler, UserMenu } from "."
 import { auth } from "../firebase-config"
-import { ThemeToggler, UserMenu } from "./"
 import MobileDrawer from "./ui/MobileDrawer"
 import NavLinks from "./ui/NavLinks"
 

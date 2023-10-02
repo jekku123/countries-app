@@ -19,9 +19,11 @@ type FavoritesState = {
 
 const removeFavoriteFromDatabase = async (uid: string, countryName: string) => {
   try {
+    // const docRef = doc(db, `users/${uid}/favorites`, countryName)
+    // deleteDoc(docRef)
     const q = query(
       collection(db, `users/${uid}/favorites`),
-      where("name", "==", countryName),
+      where("countryName", "==", countryName),
     )
     const querySnapshot = await getDocs(q)
     querySnapshot.forEach((doc) => {
