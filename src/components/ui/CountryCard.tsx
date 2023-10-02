@@ -40,7 +40,7 @@ export default function CountryCard({
 }: CountryCardProps) {
   return (
     <Card raised>
-      <CardActionArea onClick={handleCardClick(country.name.common, country)}>
+      <CardActionArea onClick={handleCardClick(country)}>
         <CardMedia
           component="img"
           sx={imageStyle}

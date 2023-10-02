@@ -1,11 +1,6 @@
 import {
   Avatar,
   Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
   Divider,
   IconButton,
   Menu,
@@ -15,9 +10,8 @@ import {
 } from "@mui/material"
 import { User } from "firebase/auth"
 import { useState } from "react"
-import { useSignOut } from "react-firebase-hooks/auth"
 import { useNavigate } from "react-router-dom"
-import { auth } from "../../firebase-config"
+import SignOutConfirm from "./SignOutConfirm"
 
 export default function UserMenu({ user }: { user: User | null | undefined }) {
   const [open, setOpen] = useState(false)
@@ -28,7 +22,7 @@ export default function UserMenu({ user }: { user: User | null | undefined }) {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null)
   }
-  const [signOut] = useSignOut(auth)
+
   const navigate = useNavigate()
 
   return (
@@ -53,7 +47,7 @@ export default function UserMenu({ user }: { user: User | null | undefined }) {
           horizontal: "right",
         }}
         open={Boolean(anchorElUser)}
-        onClose={handleCloseUserMenu}
+        onClick={handleCloseUserMenu}
       >
         {user ? (
           <Box>
@@ -61,53 +55,25 @@ export default function UserMenu({ user }: { user: User | null | undefined }) {
               <Typography component="strong">{user.displayName}</Typography>
             </MenuItem>
             <Divider />
-            <MenuItem onClick={handleCloseUserMenu}>
-              <Typography onClick={() => navigate("/profile")}>
-                Profile
-              </Typography>
+            <MenuItem onClick={() => navigate("/profile")}>
+              <Typography>Profile</Typography>
             </MenuItem>
-            <MenuItem onClick={handleCloseUserMenu}>
-              <Typography onClick={() => setOpen(true)}>Logout</Typography>
+            <MenuItem onClick={() => setOpen(true)}>
+              <Typography>Logout</Typography>
             </MenuItem>
           </Box>
         ) : (
           <Box>
-            <MenuItem onClick={handleCloseUserMenu}>
-              <Typography textAlign="center" onClick={() => navigate("/login")}>
-                Login
-              </Typography>
+            <MenuItem onClick={() => navigate("/login")}>
+              <Typography textAlign="center">Login</Typography>
             </MenuItem>
-            <MenuItem onClick={handleCloseUserMenu}>
-              <Typography
-                textAlign="center"
-                onClick={() => navigate("/register")}
-              >
-                Sign up
-              </Typography>
+            <MenuItem onClick={() => navigate("/register")}>
+              <Typography textAlign="center">Sign up</Typography>
             </MenuItem>
           </Box>
         )}
       </Menu>
-      <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogContent>
-          <DialogContentText>
-            Are you sure you want to logout?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={() => {
-              setOpen(false)
-              signOut()
-            }}
-          >
-            Yes
-          </Button>
-          <Button onClick={() => setOpen(false)} autoFocus>
-            No
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <SignOutConfirm open={open} setOpen={setOpen} />
     </>
   )
 }

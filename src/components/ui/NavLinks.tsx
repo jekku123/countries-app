@@ -1,6 +1,11 @@
 import { List, ListItem, ListItemButton, ListItemText } from "@mui/material"
 import { Link, useLocation } from "react-router-dom"
 
+const listStyle = {
+  display: "flex",
+  flexDirection: { xs: "column", sm: "row" },
+}
+
 const navLinks = [
   {
     label: "Home",
@@ -20,12 +25,7 @@ export default function NavLinks() {
   const { pathname } = useLocation()
 
   return (
-    <List
-      sx={{
-        display: "flex",
-        flexDirection: { xs: "column", sm: "row" },
-      }}
-    >
+    <List sx={listStyle}>
       {navLinks.map((item) => (
         <ListItem key={item.label} disablePadding>
           <ListItemButton

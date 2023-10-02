@@ -38,12 +38,12 @@ export default function CountriesList() {
   }
 
   const handleCardClick =
-    (countryName: string, countryData: ICountry) =>
+    (country: ICountry) =>
     (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       e.preventDefault()
       setTimeout(() => {
-        navigate(`/countries/${countryName}`, {
-          state: { country: countryData },
+        navigate(`/countries/${country.name.common}`, {
+          state: { country },
         })
       }, 500)
     }
