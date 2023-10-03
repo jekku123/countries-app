@@ -44,9 +44,10 @@ const addFavoriteToDatabase = async (uid: string, countryName: string) => {
   }
 }
 
-export const getFavorites = createAsyncThunk<string[], string>(
+export const getFavorites = createAsyncThunk<string[], string | null>(
   "favorites/getFavorites",
-  async (uid: string) => {
+  async (uid: string | null) => {
+    if (!uid) return []
     const q = query(collection(db, `users/${uid}/favorites`))
     const querySnapshot = await getDocs(q)
     const favorites = querySnapshot.docs.map((doc) => doc.data().countryName)

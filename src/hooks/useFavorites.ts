@@ -11,6 +11,9 @@ export default function useFavorites(user: User | null | undefined) {
   useEffect(() => {
     if (!user) return
     dispatch(getFavorites(user.uid))
+    return () => {
+      dispatch(getFavorites(null))
+    }
   }, [dispatch, user])
 
   const handleFavorites =
