@@ -10,6 +10,7 @@ import Card from "@mui/material/Card"
 import CardContent from "@mui/material/CardContent"
 import CardMedia from "@mui/material/CardMedia"
 import Typography from "@mui/material/Typography"
+import { FavoriteType } from "../../features/favoriteSlice"
 import { ICountry } from "../../services/countriesApi"
 
 interface CountryCardProps {
@@ -53,7 +54,10 @@ export default function CountryCard({
               {country.name.common}
             </Typography>
             <Box onClick={handleFavoriteClick(country.name.common)}>
-              {favorites?.includes(country.name.common) ? (
+              {favorites.some(
+                (favorite: FavoriteType) =>
+                  favorite.countryName === country.name.common,
+              ) ? (
                 <Favorite fontSize="large" color="error" />
               ) : (
                 <FavoriteBorder fontSize="large" />

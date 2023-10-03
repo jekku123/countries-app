@@ -1,11 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { updateProfile } from "firebase/auth"
-import { doc, setDoc } from "firebase/firestore"
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth"
 import * as yup from "yup"
 import { auth } from "../firebase-config"
 
-import { db } from "../features/favoriteSlice"
+import { addUserToDatabase } from "../firestore/db"
 import AuthForm from "./AuthForm"
 
 const initialValues = {
@@ -40,17 +38,7 @@ export default function Register() {
     if (!res) return
 
     const user = res.user
-
-    await setDoc(doc(db, "users", user.uid), {
-      uid: user.uid,
-      name,
-      authProvider: "local",
-      email,
-    })
-
-    await updateProfile(user, {
-      displayName: name,
-    })
+    await addUserToDatabase(user, name, { email })
   }
 
   return (

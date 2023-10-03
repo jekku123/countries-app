@@ -167,7 +167,9 @@ export default function AuthForm({
 
       {error && (
         <Typography variant="body1" component="p" color="error" marginTop={1}>
-          {error.code}
+          {error.code === "auth/email-already-in-use"
+            ? "Email already in use"
+            : "Wrong email or password"}
         </Typography>
       )}
 
