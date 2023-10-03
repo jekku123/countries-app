@@ -1,30 +1,40 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import {
-  addDoc,
   collection,
   deleteDoc,
+  doc,
   getDocs,
   getFirestore,
   query,
-  where,
+  setDoc,
 } from "firebase/firestore"
+import { v4 as uuid } from "uuid"
 import { app, auth } from "../firebase-config"
 
 export const db = getFirestore(app)
 
+export type FavoriteType = {
+  id: string
+  countryName: string
+}
+
 type FavoritesState = {
-  favorites: string[]
+  favorites: FavoriteType[]
   loading: boolean
 }
 
-const removeFavoriteFromDatabase = async (uid: string, countryName: string) => {
+const removeFavoriteFromDatabase = (uid: string, favoriteId: string) => {
   try {
-    // const docRef = doc(db, `users/${uid}/favorites`, countryName)
-    // deleteDoc(docRef)
-    const q = query(
-      collection(db, `users/${uid}/favorites`),
-      where("countryName", "==", countryName),
-    )
+    const docRef = doc(db, `users/${uid}/favorites`, favoriteId)
+    deleteDoc(docRef)
+  } catch (err: any) {
+    throw new Error(err.message)
+  }
+}
+
+const removeAllFavoritesFromDatabase = async (uid: string) => {
+  try {
+    const q = query(collection(db, `users/${uid}/favorites`))
     const querySnapshot = await getDocs(q)
     querySnapshot.forEach((doc) => {
       deleteDoc(doc.ref)
@@ -34,9 +44,13 @@ const removeFavoriteFromDatabase = async (uid: string, countryName: string) => {
   }
 }
 
-const addFavoriteToDatabase = async (uid: string, countryName: string) => {
+const addFavoriteToDatabase = (
+  uid: string,
+  countryName: string,
+  favId: string,
+) => {
   try {
-    await addDoc(collection(db, `users/${uid}/favorites`), {
+    setDoc(doc(db, `users/${uid}/favorites`, favId), {
       countryName,
     })
   } catch (err: any) {
@@ -44,13 +58,15 @@ const addFavoriteToDatabase = async (uid: string, countryName: string) => {
   }
 }
 
-export const getFavorites = createAsyncThunk<string[], string | null>(
+export const getFavorites = createAsyncThunk<FavoriteType[], string | null>(
   "favorites/getFavorites",
   async (uid: string | null) => {
     if (!uid) return []
     const q = query(collection(db, `users/${uid}/favorites`))
     const querySnapshot = await getDocs(q)
-    const favorites = querySnapshot.docs.map((doc) => doc.data().countryName)
+    const favorites = querySnapshot.docs.map((doc) => {
+      return { id: doc.id, countryName: doc.data().countryName }
+    })
     return favorites
   },
 )
@@ -66,19 +82,31 @@ export const favoritesSlice = createSlice({
   reducers: {
     setFavorites: (state, action) => {
       const user = auth.currentUser
+
+      if (!user) return
+
+      const userId = user.uid
       const countryName = action.payload
-      const favoriteIndex = state.favorites.indexOf(countryName)
-      if (favoriteIndex !== -1) {
-        state.favorites.splice(favoriteIndex, 1)
-        if (user) removeFavoriteFromDatabase(user.uid, countryName)
+      const indexOfFavorite = state.favorites.findIndex(
+        (favorite) => favorite.countryName === countryName,
+      )
+
+      if (indexOfFavorite !== -1) {
+        const oldFavoriteId = state.favorites[indexOfFavorite]?.id
+        state.favorites.splice(indexOfFavorite, 1)
+        removeFavoriteFromDatabase(userId, oldFavoriteId)
       } else {
-        state.favorites.push(countryName)
-        if (user) addFavoriteToDatabase(user.uid, countryName)
+        const newFavoriteId = uuid()
+        state.favorites.push({ id: newFavoriteId, countryName })
+        addFavoriteToDatabase(userId, countryName, newFavoriteId)
       }
     },
 
     clearFavorites: (state) => {
+      const user = auth.currentUser
+      if (!user) return
       state.favorites = []
+      removeAllFavoritesFromDatabase(user.uid)
     },
   },
 

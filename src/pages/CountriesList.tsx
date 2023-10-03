@@ -19,14 +19,20 @@ export default function CountriesList() {
   const [search, setSearch] = useState("")
   const { data, isLoading, error } = useGetCountriesQuery()
   const navigate = useNavigate()
-  const { favorites, loading: favLoading, handleFavorites } = useFavorites(user)
+  const {
+    favorites,
+    loading: favLoading,
+    handleFavoritesByName,
+  } = useFavorites(user)
 
   const location = useLocation()
   const isFavoritesPage = location.pathname === "/favorites"
 
   const countries = isFavoritesPage
     ? data?.filter((country: ICountry) =>
-        favorites?.includes(country.name.common),
+        favorites?.some(
+          (favorite) => favorite.countryName === country.name.common,
+        ),
       )
     : data
 
@@ -69,7 +75,7 @@ export default function CountriesList() {
                         country={country}
                         favorites={favorites}
                         handleCardClick={handleCardClick}
-                        handleFavoriteClick={handleFavorites}
+                        handleFavoriteClick={handleFavoritesByName}
                       />
                     </Grid>,
                   ]
