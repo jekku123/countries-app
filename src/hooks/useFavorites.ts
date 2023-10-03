@@ -1,6 +1,7 @@
 import { User } from "firebase/auth"
 import { useEffect } from "react"
 import { getFavorites, setFavorites } from "../features/favoriteSlice"
+
 import { useAppDispatch, useAppSelector } from "../redux/hooks"
 
 export default function useFavorites(user: User | null | undefined) {
