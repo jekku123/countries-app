@@ -6,10 +6,11 @@ import Home from "../pages/Home"
 import { AuthRoute } from "../auth/AuthRoute"
 import { ProtectedRoute } from "../auth/ProtectedRoute"
 
+import Register from "../auth/Register"
 import CountriesList from "../pages/CountriesList"
-import Login from "../pages/Login"
+
+import Login from "../auth/Login"
 import Profile from "../pages/Profile"
-import Register from "../pages/Register"
 
 export const router = createBrowserRouter([
   {

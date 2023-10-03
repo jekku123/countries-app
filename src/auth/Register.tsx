@@ -3,8 +3,8 @@ import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth"
 import * as yup from "yup"
 import { auth } from "../firebase-config"
 
-import AuthForm from "../auth/AuthForm"
 import { addUserToDatabase } from "../firestore/db"
+import AuthForm from "./AuthForm"
 
 const initialValues = {
   name: "",
