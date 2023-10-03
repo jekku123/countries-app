@@ -43,13 +43,25 @@ const StyledContainer = styled(Container)<ContainerProps>(() => ({
   padding: "30px",
 }))
 
+type FormValues = {
+  [key: string]: string
+}
+
+interface AuthFormProps {
+  initialValues: FormValues
+  onSubmit: (values: FormValues) => Promise<void>
+  validationSchema?: any
+  loading: boolean
+  error: any
+}
+
 export default function AuthForm({
   initialValues,
   onSubmit,
   validationSchema,
   loading,
   error,
-}: any) {
+}: AuthFormProps) {
   const [signInWithGoogle, , googleLoading] = useSignInWithGoogle(auth)
 
   const { values, touched, errors, handleBlur, handleChange, handleSubmit } =

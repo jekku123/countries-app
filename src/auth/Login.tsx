@@ -8,13 +8,11 @@ const initialValues = {
   password: "",
 }
 
-type FormState = typeof initialValues
-
 export default function Login() {
   const [signInWithEmailAndPassword, , loading, error] =
     useSignInWithEmailAndPassword(auth)
 
-  const onSubmit = async (values: FormState) => {
+  const onSubmit = async (values: { [key: string]: string }) => {
     const { email, password } = values
     if (!email || !password) return
     await signInWithEmailAndPassword(email, password)

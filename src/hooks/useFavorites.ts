@@ -14,10 +14,10 @@ export default function useFavorites(user: User | null | undefined) {
   }, [dispatch, user])
 
   const handleFavorites =
-    (name: string) => (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    (countryname: string) =>
+    (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
       e.stopPropagation()
-      if (!user) return
-      dispatch(setFavorites(name))
+      dispatch(setFavorites(countryname))
     }
 
   return { favorites, loading, handleFavorites }

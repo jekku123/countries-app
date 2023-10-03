@@ -14,8 +14,6 @@ const initialValues = {
   password: "",
 }
 
-type FormState = typeof initialValues
-
 const validationSchema = yup.object({
   name: yup
     .string()
@@ -35,7 +33,7 @@ export default function Register() {
   const [createUserWithEmailAndPassword, , loading, error] =
     useCreateUserWithEmailAndPassword(auth)
 
-  const onSubmit = async (values: FormState) => {
+  const onSubmit = async (values: { [key: string]: string }) => {
     const { name, email, password } = values
     const res = await createUserWithEmailAndPassword(email, password)
 
