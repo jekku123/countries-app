@@ -54,7 +54,7 @@ export default function CountryCard({
               {country.name.common}
             </Typography>
             <Box onClick={handleFavoriteClick(country.name.common)}>
-              {favorites?.some(
+              {favorites.some(
                 (favorite: FavoriteType) =>
                   favorite.countryName === country.name.common,
               ) ? (

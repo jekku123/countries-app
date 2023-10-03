@@ -6,7 +6,6 @@ import * as yup from "yup"
 import { auth } from "../firebase-config"
 
 import { db } from "../features/favoriteSlice"
-import AuthForm from "./AuthForm"
 
 const initialValues = {
   name: "",
