@@ -1,6 +1,6 @@
 # Countries App [![countries](https://github.com/jekku123/countries-app/actions/workflows/main.yml/badge.svg)](https://github.com/jekku123/countries-app/actions/workflows/main.yml)
 
-Countries app is a simple app that shows information about countries. It uses [REST Countries API](https://restcountries.eu/) to fetch the data and []
+Countries app is a simple app that shows information about countries. It uses [REST Countries API](https://restcountries.eu/) to fetch the information about countries and [Open Weather Map](https://api.openweathermap.org/) to get the weather information.
 
 ## Features
 
@@ -13,8 +13,8 @@ Countries app is a simple app that shows information about countries. It uses [R
 ## Tech stack
 
 - [React](https://reactjs.org/)
-- [Redux Toolkit](https://redux-toolkit.js.org/)
 - [React Router](https://reactrouter.com/)
+- [Redux Toolkit](https://redux-toolkit.js.org/)
 - [Material UI](https://material-ui.com/)
 
 ## Installation
