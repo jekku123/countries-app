@@ -13,7 +13,6 @@ Countries app is a simple app that shows information about countries. It uses [R
 ## Tech stack
 
 - [React](https://reactjs.org/)
-- [Redux](https://redux.js.org/)
 - [Redux Toolkit](https://redux-toolkit.js.org/)
 - [React Router](https://reactrouter.com/)
 - [Styled Components](https://styled-components.com/)
