@@ -22,5 +22,17 @@ Countries app is a simple app that shows information about countries. It uses [R
 1. Clone the repo
 
 ```sh
-   git clone
+   git clone https://github.com/jekku123/countries-app.git
+```
+
+2. Install NPM packages
+
+```sh
+   npm install
+```
+
+3. Run the app
+
+```sh
+   npm startxw
 ```
