@@ -1,4 +1,4 @@
-# Countries App [![countries](https://github.com/jekku123/countries-app/actions/workflows/main.yml/badge.svg)](https://github.com/jekku123/countries-app/actions/workflows/main.yml)
+# Countries App v2 [![countries](https://github.com/jekku123/countries-app/actions/workflows/main.yml/badge.svg)](https://github.com/jekku123/countries-app/actions/workflows/main.yml)
 
 Uses [Vite](https://vitejs.dev/), [Vitest](https://vitest.dev/), and [React Testing Library](https://github.com/testing-library/react-testing-library) to create a modern [React](https://react.dev/) app compatible with [Create React App](https://create-react-app.dev/)
 
