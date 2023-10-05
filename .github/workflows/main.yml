@@ -1,8 +1,7 @@
 name: countries
 on:
   push:
-      branches:
-        -main
+    branches: -main
 
 jobs:
   my-job:
