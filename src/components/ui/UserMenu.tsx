@@ -10,11 +10,11 @@ import {
 } from "@mui/material"
 import { User } from "firebase/auth"
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import SignOutConfirm from "./SignOutConfirm"
+import { Link } from "react-router-dom"
+import { SignOutDialog } from "../"
 
 export default function UserMenu({ user }: { user: User | null | undefined }) {
-  const [open, setOpen] = useState(false)
+  const [isOpenSignOutDialog, setIsOpenSignOutDialog] = useState(false)
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
   const handleOpenUserMenu = (e: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(e.currentTarget)
@@ -22,8 +22,6 @@ export default function UserMenu({ user }: { user: User | null | undefined }) {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null)
   }
-
-  const navigate = useNavigate()
 
   return (
     <>
@@ -55,25 +53,28 @@ export default function UserMenu({ user }: { user: User | null | undefined }) {
               <Typography component="strong">{user.displayName}</Typography>
             </MenuItem>
             <Divider />
-            <MenuItem onClick={() => navigate("/profile")}>
+            <MenuItem component={Link} to="/profile">
               <Typography>Profile</Typography>
             </MenuItem>
-            <MenuItem onClick={() => setOpen(true)}>
+            <MenuItem onClick={() => setIsOpenSignOutDialog(true)}>
               <Typography>Logout</Typography>
             </MenuItem>
           </Box>
         ) : (
           <Box>
-            <MenuItem onClick={() => navigate("/login")}>
+            <MenuItem component={Link} to="/login">
               <Typography textAlign="center">Login</Typography>
             </MenuItem>
-            <MenuItem onClick={() => navigate("/register")}>
+            <MenuItem component={Link} to="/register">
               <Typography textAlign="center">Sign up</Typography>
             </MenuItem>
           </Box>
         )}
       </Menu>
-      <SignOutConfirm open={open} setOpen={setOpen} />
+      <SignOutDialog
+        open={isOpenSignOutDialog}
+        setOpen={setIsOpenSignOutDialog}
+      />
     </>
   )
 }

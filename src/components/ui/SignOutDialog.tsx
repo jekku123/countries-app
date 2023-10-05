@@ -8,7 +8,7 @@ import {
 import { useSignOut } from "react-firebase-hooks/auth"
 import { auth } from "../../firebase-config"
 
-export default function SignOutConfirm({
+export default function SignOutDialog({
   open,
   setOpen,
 }: {

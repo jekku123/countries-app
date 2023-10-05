@@ -15,18 +15,16 @@ export const db = getFirestore(app)
 export const addUserToDatabase = async (
   user: User,
   name: string,
-  data: any,
+  email: string,
 ) => {
   const docRef = doc(db, "users", user.uid)
-
   try {
     await setDoc(docRef, {
       uid: user.uid,
       name,
-      ...data,
+      email,
       authProvider: "local",
     })
-
     await updateProfile(user, {
       displayName: name,
     })

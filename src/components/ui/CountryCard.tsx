@@ -28,7 +28,7 @@ const StyledBox = styled(Box)(() => ({
 }))
 
 const imageStyle = {
-  height: "12rem",
+  height: "10rem",
   width: "100%",
   objectFit: "fill",
 }

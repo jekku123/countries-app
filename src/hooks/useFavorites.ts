@@ -5,8 +5,9 @@ import { getFavorites, setFavorites } from "../features/favoriteSlice"
 import { useAppDispatch, useAppSelector } from "../redux/hooks"
 
 export default function useFavorites(user: User | null | undefined) {
-  const favorites = useAppSelector((state) => state.favorites.favorites)
-  const loading = useAppSelector((state) => state.favorites.loading)
+  const { favorites, loading, error } = useAppSelector(
+    (state) => state.favorites,
+  )
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -21,5 +22,5 @@ export default function useFavorites(user: User | null | undefined) {
       dispatch(setFavorites(countryname))
     }
 
-  return { favorites, loading, handleFavoritesByName }
+  return { favorites, loading, error, handleFavoritesByName }
 }

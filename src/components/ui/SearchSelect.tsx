@@ -4,6 +4,7 @@ import TextField from "@mui/material/TextField"
 import { ICountry } from "../../services/countriesApi"
 
 interface SearchSelectProps {
+  search: string
   countries?: ICountry[]
   handleSearch: (
     _e: React.SyntheticEvent<Element, Event>,
@@ -12,6 +13,7 @@ interface SearchSelectProps {
 }
 
 export default function SearchSelect({
+  search,
   countries = [],
   handleSearch,
 }: SearchSelectProps) {
@@ -20,6 +22,7 @@ export default function SearchSelect({
       sx={{ width: 300 }}
       options={countries}
       autoHighlight
+      clearOnBlur={false}
       onInputChange={handleSearch}
       getOptionLabel={(option) => option.name.common}
       renderOption={(props, option) => (

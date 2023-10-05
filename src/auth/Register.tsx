@@ -38,7 +38,7 @@ export default function Register() {
     if (!res) return
 
     const user = res.user
-    await addUserToDatabase(user, name, { email })
+    await addUserToDatabase(user, name, email)
   }
 
   return (

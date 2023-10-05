@@ -10,6 +10,7 @@ export type FavoriteType = {
 export type FavoritesState = {
   favorites: FavoriteType[]
   loading: boolean
+  error: string | null
 }
 
 export const getFavorites = createAsyncThunk<FavoriteType[], string | null>(
@@ -23,12 +24,11 @@ export const getFavorites = createAsyncThunk<FavoriteType[], string | null>(
 
 export const favoritesSlice = createSlice({
   name: "favorites",
-
   initialState: {
     favorites: [],
     loading: true,
+    error: null,
   } as FavoritesState,
-
   reducers: {
     setFavorites: setFavoritesReducer,
     clearFavorites: clearFavoritesReducer,
@@ -42,13 +42,14 @@ export const favoritesSlice = createSlice({
       })
       .addCase(getFavorites.pending, (state) => {
         state.loading = true
+        state.error = null
       })
-      .addCase(getFavorites.rejected, (state) => {
+      .addCase(getFavorites.rejected, (state, action) => {
         state.loading = false
+        state.error = action.error.message || "There was an error"
       })
   },
 })
 
 export const { setFavorites, clearFavorites } = favoritesSlice.actions
-
 export default favoritesSlice.reducer

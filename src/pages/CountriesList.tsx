@@ -57,7 +57,11 @@ export default function CountriesList() {
   return (
     <StyledContainer maxWidth="lg" sx={{ pt: 5 }}>
       <Box marginBottom={5}>
-        <SearchSelect countries={countries} handleSearch={handleSearch} />
+        <SearchSelect
+          countries={countries}
+          search={search}
+          handleSearch={handleSearch}
+        />
       </Box>
       {error ? (
         <Box>Sorry, there was an error</Box>
