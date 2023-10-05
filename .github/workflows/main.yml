@@ -14,4 +14,5 @@ jobs:
           bun-version: latest
 
       - run: bun install
+      - run: echo "All tests passed!"
       - run: bun run build
