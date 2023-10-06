@@ -12,17 +12,15 @@ import { app } from "../firebase-config"
 
 export const db = getFirestore(app)
 
-export const addUserToDatabase = async (
-  user: User,
-  name: string,
-  email: string,
-) => {
+type Fields = {
+  [key: string]: string
+}
+
+export const addUserToDatabase = async (user: User, fields: Fields) => {
   const docRef = doc(db, "users", user.uid)
   try {
     await setDoc(docRef, {
-      uid: user.uid,
-      name,
-      email,
+      ...fields,
       authProvider: "local",
     })
   } catch (error: any) {
@@ -30,10 +28,13 @@ export const addUserToDatabase = async (
   }
 }
 
-export const removeFavoriteFromDatabase = (uid: string, favoriteId: string) => {
+export const removeFavoriteFromDatabase = async (
+  uid: string,
+  favoriteId: string,
+) => {
   try {
     const docRef = doc(db, `users/${uid}/favorites`, favoriteId)
-    deleteDoc(docRef)
+    await deleteDoc(docRef)
   } catch (err: any) {
     throw new Error(err.message)
   }

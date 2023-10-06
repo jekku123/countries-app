@@ -8,7 +8,6 @@ export const store = configureStore({
   reducer: {
     favorites: favoriteSlice,
     [countriesApi.reducerPath]: countriesApiReducer,
-
     [weatherApi.reducerPath]: weatherApiReducer,
   },
 

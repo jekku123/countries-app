@@ -17,6 +17,7 @@ export const setFavoritesReducer = (
 
   const userId = user.uid
   const countryName = action.payload
+
   const indexOfFavorite = state.favorites.findIndex(
     (favorite) => favorite.countryName === countryName,
   )

@@ -40,7 +40,7 @@ export default function Register() {
     await updateProfile(user, {
       displayName: name,
     })
-    await addUserToDatabase(user, name, email)
+    await addUserToDatabase(user, { name, email })
   }
 
   return (
