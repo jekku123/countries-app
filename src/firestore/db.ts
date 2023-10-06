@@ -1,4 +1,4 @@
-import { User, updateProfile } from "firebase/auth"
+import { User } from "firebase/auth"
 import {
   collection,
   deleteDoc,
@@ -24,9 +24,6 @@ export const addUserToDatabase = async (
       name,
       email,
       authProvider: "local",
-    })
-    await updateProfile(user, {
-      displayName: name,
     })
   } catch (error: any) {
     throw new Error(error.message)

@@ -6,7 +6,8 @@ import {
   DialogContentText,
 } from "@mui/material"
 import { useSignOut } from "react-firebase-hooks/auth"
-import { auth } from "../../firebase-config"
+import { useNavigate } from "react-router-dom"
+import { auth } from "../firebase-config"
 
 export default function SignOutDialog({
   open,
@@ -16,6 +17,7 @@ export default function SignOutDialog({
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) {
   const [signOut] = useSignOut(auth)
+  const navigate = useNavigate()
 
   return (
     <Dialog open={open} onClose={() => setOpen(false)}>
@@ -27,6 +29,7 @@ export default function SignOutDialog({
           onClick={() => {
             setOpen(false)
             signOut()
+            navigate(0)
           }}
         >
           Yes

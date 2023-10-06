@@ -3,6 +3,7 @@ import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth"
 import * as yup from "yup"
 import { auth } from "../firebase-config"
 
+import { updateProfile } from "firebase/auth"
 import { addUserToDatabase } from "../firestore/db"
 import AuthForm from "./AuthForm"
 
@@ -34,10 +35,11 @@ export default function Register() {
   const onSubmit = async (values: { [key: string]: string }) => {
     const { name, email, password } = values
     const res = await createUserWithEmailAndPassword(email, password)
-
     if (!res) return
-
     const user = res.user
+    await updateProfile(user, {
+      displayName: name,
+    })
     await addUserToDatabase(user, name, email)
   }
 
