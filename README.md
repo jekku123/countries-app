@@ -6,6 +6,7 @@ Countries app is a simple app that shows information about countries. It uses [R
 
 - Search countries by name
 - View country details
+- Authentication
 - User favorites
 - Updateable user profile
 - Dark mode
@@ -17,6 +18,8 @@ Countries app is a simple app that shows information about countries. It uses [R
 - [React Router](https://reactrouter.com/)
 - [Redux Toolkit](https://redux-toolkit.js.org/)
 - [Material UI](https://material-ui.com/)
+- [Firebase](https://firebase.google.com/)
+- [Firestore](https://firebase.google.com/products/firestore)
 
 ## Installation
 
