@@ -43,7 +43,7 @@ export default function Header() {
                 edge="start"
                 aria-label="open drawer"
                 onClick={handleDrawerToggle}
-                sx={{ mr: 2, display: { xs: "block", sm: "none" } }}
+                sx={{ mr: 2, display: { xs: "block", md: "none" } }}
               >
                 <MenuIcon />
               </IconButton>
@@ -65,7 +65,7 @@ export default function Header() {
               </Typography>
               <Box
                 sx={{
-                  display: { xs: "none", sm: "block" },
+                  display: { xs: "none", md: "block" },
                 }}
               >
                 <NavLinks />

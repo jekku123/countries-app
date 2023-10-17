@@ -7,6 +7,7 @@ Countries app is a simple app that shows information about countries. It uses [R
 - Search countries by name
 - View country details
 - User favorites
+- Updateable user profile
 - Dark mode
 - Responsive design
 

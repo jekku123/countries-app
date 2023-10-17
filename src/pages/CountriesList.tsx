@@ -61,12 +61,7 @@ export default function CountriesList() {
         <SearchSelect countries={countries} handleSearch={handleSearch} />
       </Box>
       {isFavoritesPage && favorites.at(0) && (
-        <Button
-          onClick={removeFavorites}
-          variant="contained"
-          color="primary"
-          sx={{ mb: 2 }}
-        >
+        <Button onClick={removeFavorites} sx={{ mb: 2 }}>
           Clear favorites
         </Button>
       )}

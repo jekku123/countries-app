@@ -7,6 +7,7 @@ import {
   Paper,
   Stack,
   Typography,
+  styled,
 } from "@mui/material"
 import { useLocation, useNavigate } from "react-router-dom"
 import { ICountry } from "../redux/services/countriesApi"
@@ -14,6 +15,32 @@ import { useGetWeatherQuery } from "../redux/services/weatherApi"
 import { formatNeighbourCountries } from "../utils/formatters"
 
 const NOT_SO_SECRET_MAP_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_KEY
+
+const StyledHeaderPaper = styled(Paper)(() => ({
+  margin: "20px 0px",
+  padding: "20px 30px 30px 30px",
+  height: "300px",
+}))
+
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  padding: "20px 30px 30px 30px",
+  width: "100%",
+  [theme.breakpoints.up("md")]: {
+    width: "50%",
+  },
+}))
+
+const StyledBox = styled(Box)(() => ({
+  display: "inline-block",
+  padding: "0px 15px",
+  borderRadius: "5px",
+}))
+
+const googleMapStyle = {
+  borderRadius: "5px",
+  border: "none",
+  marginTop: "20px",
+}
 
 export default function CountriesSingle() {
   const navigate = useNavigate()
@@ -29,23 +56,13 @@ export default function CountriesSingle() {
 
   return (
     <Container maxWidth="lg">
-      <Paper
+      <StyledHeaderPaper
         elevation={3}
         sx={{
-          mt: "20px",
-          p: "20px 30px 30px 30px",
           backgroundImage: `url(https://source.unsplash.com/1200x800/?${country.capital})`,
-          height: "300px",
         }}
       >
-        <Box
-          sx={{
-            bgcolor: "background.paper",
-            display: "inline-block",
-            px: "15px",
-            borderRadius: "5px",
-          }}
-        >
+        <StyledBox sx={{ bgcolor: "background.paper" }}>
           <Typography
             variant="h3"
             component="h2"
@@ -53,20 +70,17 @@ export default function CountriesSingle() {
           >
             {country.name.common}
           </Typography>
-        </Box>
+        </StyledBox>
         <img
           src={country.flags.png}
           alt={country.name.common}
           height={"70px"}
           style={{ float: "right" }}
         />
-      </Paper>
+      </StyledHeaderPaper>
 
-      <Stack direction="row" gap="20px">
-        <Paper
-          elevation={3}
-          sx={{ mt: "20px", p: "20px 30px 30px 30px", width: "50%" }}
-        >
+      <Stack direction={{ sm: "column", md: "row" }} gap="20px">
+        <StyledPaper elevation={3}>
           <Typography variant="h4" component="h3" gutterBottom>
             Info:
           </Typography>
@@ -86,11 +100,8 @@ export default function CountriesSingle() {
             mesmerizing blend of traditions and influences that define the
             unique charm of {country.name.common}.
           </Typography>
-        </Paper>
-        <Paper
-          elevation={3}
-          sx={{ mt: "20px", p: "20px 30px 30px 30px", width: "50%" }}
-        >
+        </StyledPaper>
+        <StyledPaper elevation={3}>
           <Typography variant="h4" component="h3" gutterBottom>
             More info:
           </Typography>
@@ -115,11 +126,7 @@ export default function CountriesSingle() {
                 </Stack>
               )}
               <iframe
-                style={{
-                  borderRadius: "5px",
-                  border: "none",
-                  marginTop: "20px",
-                }}
+                style={googleMapStyle}
                 width="100%"
                 height={200}
                 loading="lazy"
@@ -129,7 +136,7 @@ export default function CountriesSingle() {
               />
             </Box>
           </Stack>
-        </Paper>
+        </StyledPaper>
       </Stack>
       <Button
         onClick={() => navigate(-1)}
