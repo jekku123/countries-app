@@ -1,10 +1,10 @@
 import { v4 as uuid } from "uuid"
-import { auth } from "../firebase-config"
+import { auth } from "../../firebase-config"
 import {
   addFavoriteToDatabase,
   removeAllFavoritesFromDatabase,
   removeFavoriteFromDatabase,
-} from "../firestore/db"
+} from "../../firestore/db"
 import { FavoritesState } from "./favoriteSlice"
 
 export const setFavoritesReducer = (
@@ -23,7 +23,7 @@ export const setFavoritesReducer = (
   )
 
   if (indexOfFavorite !== -1) {
-    const oldFavoriteId = state.favorites[indexOfFavorite]?.id
+    const oldFavoriteId = state.favorites[indexOfFavorite].id
     state.favorites.splice(indexOfFavorite, 1)
     removeFavoriteFromDatabase(userId, oldFavoriteId)
   } else {

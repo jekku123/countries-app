@@ -10,14 +10,18 @@ import Card from "@mui/material/Card"
 import CardContent from "@mui/material/CardContent"
 import CardMedia from "@mui/material/CardMedia"
 import Typography from "@mui/material/Typography"
-import { FavoriteType } from "../../features/favoriteSlice"
-import { ICountry } from "../../services/countriesApi"
+import { FavoriteType } from "../../redux/features/favoriteSlice"
+import { ICountry } from "../../redux/services/countriesApi"
 
 interface CountryCardProps {
   country: ICountry
-  favorites: any
-  handleFavoriteClick: any
-  handleCardClick: any
+  favorites: FavoriteType[]
+  handleFavoriteClick: (
+    countryname: string,
+  ) => (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
+  handleCardClick: (
+    country: ICountry,
+  ) => (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 
 const StyledBox = styled(Box)(() => ({
@@ -28,7 +32,7 @@ const StyledBox = styled(Box)(() => ({
 }))
 
 const imageStyle = {
-  height: "10rem",
+  height: "12rem",
   width: "100%",
   objectFit: "fill",
 }

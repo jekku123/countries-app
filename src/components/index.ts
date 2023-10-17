@@ -1,4 +1,4 @@
-export { default as SignOutDialog } from "../auth/SignOutDialog"
+export { default as SignOutDialog } from "../auth/LogoutDialog"
 export { default as Header } from "./Header"
 export { default as CountryCard } from "./ui/CountryCard"
 export { default as MobileDrawer } from "./ui/MobileDrawer"

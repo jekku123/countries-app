@@ -18,9 +18,9 @@ export interface ICountry {
       symbol: string
     }
   }
-  maps: {
-    googleMaps: string
-  }
+  region: string
+  subregion: string
+  borders: string[]
 }
 
 export const countriesApi = createApi({
@@ -28,7 +28,8 @@ export const countriesApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: (builder) => ({
     getCountries: builder.query<ICountry[], void>({
-      query: () => "all?fields=name,flags,population,capital,currencies",
+      query: () =>
+        "all?fields=name,flags,population,capital,currencies,region,subregion,borders",
       transformResponse: (response: ICountry[]) => {
         const sortedCountries = response.sort((a, b) =>
           a.name.common.localeCompare(b.name.common, "fi"),

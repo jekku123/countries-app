@@ -13,7 +13,11 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import { SignOutDialog } from "../"
 
-export default function UserMenu({ user }: { user: User | null | undefined }) {
+interface UserMenuProps {
+  user: User | null | undefined
+}
+
+export default function UserMenu({ user }: UserMenuProps) {
   const [isOpenSignOutDialog, setIsOpenSignOutDialog] = useState(false)
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
   const handleOpenUserMenu = (e: React.MouseEvent<HTMLElement>) => {

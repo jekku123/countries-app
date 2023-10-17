@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit"
 import { setupListeners } from "@reduxjs/toolkit/dist/query"
-import favoriteSlice from "../features/favoriteSlice"
-import countriesApiReducer, { countriesApi } from "../services/countriesApi"
-import weatherApiReducer, { weatherApi } from "../services/weatherApi"
+import favoriteSlice from "./features/favoriteSlice"
+import countriesApiReducer, { countriesApi } from "./services/countriesApi"
+import weatherApiReducer, { weatherApi } from "./services/weatherApi"
 
 export const store = configureStore({
   reducer: {

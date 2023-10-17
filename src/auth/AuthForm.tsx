@@ -72,13 +72,13 @@ export default function AuthForm({
     })
 
   const { pathname } = useLocation()
-  const isRegister = pathname === "/register"
+  const isRegisterPage = pathname === "/register"
 
   return (
     <StyledContainer>
       <StyledPaper elevation={3}>
         <Typography variant="h5" component="h2" align="center">
-          {isRegister ? "Sign up" : "Login"}
+          {isRegisterPage ? "Sign up" : "Login"}
         </Typography>
         <form
           onSubmit={handleSubmit}
@@ -110,7 +110,13 @@ export default function AuthForm({
                 id={fieldname}
                 key={fieldname}
                 name={fieldname}
-                type={fieldname === "password" ? "password" : "text"}
+                type={
+                  fieldname === "password"
+                    ? "password"
+                    : fieldname === "email"
+                    ? "email"
+                    : "text"
+                }
                 value={values[fieldname]}
                 onBlur={handleBlur}
                 onChange={handleChange}
@@ -134,7 +140,7 @@ export default function AuthForm({
             sx={{ marginTop: "20px" }}
             disabled={loading || googleLoading}
           >
-            {isRegister ? "Sign up" : "Login"}
+            {isRegisterPage ? "Sign up" : "Login"}
           </Button>
         </form>
 
@@ -158,11 +164,14 @@ export default function AuthForm({
       </StyledPaper>
 
       <Typography variant="body1" component="p">
-        {isRegister ? "Already have an account? " : "No account? "}
-        <Link component={RouterLink} to={isRegister ? "/login" : "/register"}>
-          {isRegister ? "Login" : "Sign up"}
+        {isRegisterPage ? "Already have an account? " : "No account? "}
+        <Link
+          component={RouterLink}
+          to={isRegisterPage ? "/login" : "/register"}
+        >
+          {isRegisterPage ? "Login" : "Sign up"}
         </Link>
-        {!isRegister && " now"}
+        {!isRegisterPage && " now"}
       </Typography>
 
       {error && (
@@ -182,25 +191,3 @@ export default function AuthForm({
     </StyledContainer>
   )
 }
-
-/* <TextField
-margin="normal"
-variant="outlined"
-fullWidth
-label="name"
-name="name"
-type="text"
-value={formik.values.name}
-onChange={formik.handleChange}
-onBlur={formik.handleBlur}
-error={formik.touched.name && Boolean(formik.errors.name)}
-helperText={formik.touched.name && formik.errors.name}
-sx={{ textTransform: "capitalize" }}
-autoFocus
-inputProps={{
-  autoComplete: "new-password",
-  form: {
-    autoComplete: "off",
-  },
-}}
-/> */

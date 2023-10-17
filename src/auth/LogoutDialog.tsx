@@ -9,7 +9,7 @@ import { useSignOut } from "react-firebase-hooks/auth"
 import { useNavigate } from "react-router-dom"
 import { auth } from "../firebase-config"
 
-export default function SignOutDialog({
+export default function LogoutDialog({
   open,
   setOpen,
 }: {

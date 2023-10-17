@@ -34,12 +34,17 @@ export default function Register() {
 
   const onSubmit = async (values: { [key: string]: string }) => {
     const { name, email, password } = values
+
     const res = await createUserWithEmailAndPassword(email, password)
+
     if (!res) return
+
     const user = res.user
+
     await updateProfile(user, {
       displayName: name,
     })
+
     await addUserToDatabase(user, { name, email })
   }
 

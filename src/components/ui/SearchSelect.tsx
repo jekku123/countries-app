@@ -1,10 +1,9 @@
 import Autocomplete from "@mui/material/Autocomplete"
 import Box from "@mui/material/Box"
 import TextField from "@mui/material/TextField"
-import { ICountry } from "../../services/countriesApi"
+import { ICountry } from "../../redux/services/countriesApi"
 
 interface SearchSelectProps {
-  search: string
   countries?: ICountry[]
   handleSearch: (
     _e: React.SyntheticEvent<Element, Event>,
@@ -13,7 +12,6 @@ interface SearchSelectProps {
 }
 
 export default function SearchSelect({
-  search,
   countries = [],
   handleSearch,
 }: SearchSelectProps) {

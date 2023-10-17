@@ -30,7 +30,12 @@ export default function Header() {
     <header>
       <AppBar position="static">
         <Container>
-          <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Toolbar
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
             <Stack direction="row" alignItems="center">
               <IconButton
                 size="large"

@@ -4,7 +4,7 @@ const links = ["https://restcountries.com/", "http://openweathermap.org/"]
 
 export default function Home() {
   return (
-    <Container maxWidth="md" sx={{ padding: "30px" }}>
+    <Container maxWidth="md" sx={{ padding: "50px" }}>
       <Typography variant="h3" component="h2" mb={3}>
         Countries app is a simple React application made in Business College
         Helsinki lessons.

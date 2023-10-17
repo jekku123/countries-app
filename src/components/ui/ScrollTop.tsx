@@ -21,10 +21,9 @@ export default function ScrollTop() {
     <Fade in={trigger}>
       <Box
         onClick={handleClick}
-        role="presentation"
         sx={{ position: "fixed", bottom: 16, right: 16 }}
       >
-        <Fab size="medium" aria-label="scroll back to top">
+        <Fab size="medium">
           <KeyboardArrowUpIcon />
         </Fab>
       </Box>

@@ -1,11 +1,11 @@
-import { Box, Container, Grid, styled } from "@mui/material"
+import { Box, Button, Container, Grid, styled } from "@mui/material"
 import { useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { useLocation, useNavigate } from "react-router-dom"
 import { CountryCard, SearchSelect, SkeletonGrid } from "../components"
 import { auth } from "../firebase-config"
 import useFavorites from "../hooks/useFavorites"
-import { ICountry, useGetCountriesQuery } from "../services/countriesApi"
+import { ICountry, useGetCountriesQuery } from "../redux/services/countriesApi"
 
 const StyledContainer = styled(Container)(() => ({
   display: "flex",
@@ -17,12 +17,13 @@ const StyledContainer = styled(Container)(() => ({
 export default function CountriesList() {
   const [user] = useAuthState(auth)
   const [search, setSearch] = useState("")
-  const { data, isLoading, error } = useGetCountriesQuery()
   const navigate = useNavigate()
+  const { data, isLoading, error } = useGetCountriesQuery()
   const {
     favorites,
     loading: favLoading,
-    handleFavoritesByName,
+    handleFavoriteClick,
+    removeFavorites,
   } = useFavorites(user)
 
   const location = useLocation()
@@ -56,13 +57,20 @@ export default function CountriesList() {
 
   return (
     <StyledContainer maxWidth="lg" sx={{ pt: 5 }}>
-      <Box marginBottom={5}>
-        <SearchSelect
-          countries={countries}
-          search={search}
-          handleSearch={handleSearch}
-        />
+      <Box marginBottom={isFavoritesPage ? 2 : 3}>
+        <SearchSelect countries={countries} handleSearch={handleSearch} />
       </Box>
+      {isFavoritesPage && user && (
+        <Button
+          onClick={removeFavorites}
+          variant="contained"
+          color="primary"
+          sx={{ mb: 2 }}
+        >
+          Clear favorites
+        </Button>
+      )}
+
       {error ? (
         <Box>Sorry, there was an error</Box>
       ) : isLoading || favLoading ? (
@@ -74,12 +82,21 @@ export default function CountriesList() {
               country.name?.common?.toLowerCase().includes(search.toLowerCase())
                 ? [
                     ...prevCountries,
-                    <Grid key={country.name.common} item xs={12} sm={6} md={4}>
+                    <Grid
+                      key={country.name.common}
+                      item
+                      xs={12}
+                      sm={6}
+                      md={4}
+                      xl={3}
+                    >
                       <CountryCard
-                        country={country}
-                        favorites={favorites}
-                        handleCardClick={handleCardClick}
-                        handleFavoriteClick={handleFavoritesByName}
+                        {...{
+                          country,
+                          favorites,
+                          handleCardClick,
+                          handleFavoriteClick,
+                        }}
                       />
                     </Grid>,
                   ]

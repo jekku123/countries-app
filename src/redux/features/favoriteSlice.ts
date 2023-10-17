@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { getFavoritesFromDatabase } from "../firestore/db"
+import { getFavoritesFromDatabase } from "../../firestore/db"
 import { clearFavoritesReducer, setFavoritesReducer } from "./reducers"
 
 export type FavoriteType = {
@@ -36,17 +36,17 @@ export const favoritesSlice = createSlice({
 
   extraReducers: (builder) => {
     builder
-      .addCase(getFavorites.fulfilled, (state, action) => {
-        state.favorites = action.payload
+      .addCase(getFavorites.rejected, (state, action) => {
         state.loading = false
+        state.error = action.error.message || "There was an error"
       })
       .addCase(getFavorites.pending, (state) => {
         state.loading = true
         state.error = null
       })
-      .addCase(getFavorites.rejected, (state, action) => {
+      .addCase(getFavorites.fulfilled, (state, action) => {
+        state.favorites = action.payload
         state.loading = false
-        state.error = action.error.message || "There was an error"
       })
   },
 })

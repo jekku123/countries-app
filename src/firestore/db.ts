@@ -4,16 +4,14 @@ import {
   deleteDoc,
   doc,
   getDocs,
-  getFirestore,
   query,
   setDoc,
 } from "firebase/firestore"
-import { app } from "../firebase-config"
-
-export const db = getFirestore(app)
+import { db } from "../firebase-config"
 
 type Fields = {
-  [key: string]: string
+  name: string
+  email: string
 }
 
 export const addUserToDatabase = async (user: User, fields: Fields) => {

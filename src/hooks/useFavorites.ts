@@ -1,6 +1,10 @@
 import { User } from "firebase/auth"
 import { useEffect } from "react"
-import { getFavorites, setFavorites } from "../features/favoriteSlice"
+import {
+  clearFavorites,
+  getFavorites,
+  setFavorites,
+} from "../redux/features/favoriteSlice"
 
 import { useAppDispatch, useAppSelector } from "../redux/hooks"
 
@@ -15,12 +19,16 @@ export default function useFavorites(user: User | null | undefined) {
     dispatch(getFavorites(user.uid))
   }, [dispatch, user])
 
-  const handleFavoritesByName =
+  const handleFavoriteClick =
     (countryname: string) =>
     (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
       e.stopPropagation()
       dispatch(setFavorites(countryname))
     }
 
-  return { favorites, loading, error, handleFavoritesByName }
+  const removeFavorites = () => {
+    dispatch(clearFavorites())
+  }
+
+  return { favorites, loading, error, handleFavoriteClick, removeFavorites }
 }
