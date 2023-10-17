@@ -40,3 +40,10 @@ Countries app is a simple app that shows information about countries. It uses [R
 ```sh
    npm start
 ```
+
+## Authors and acknowledgment
+
+Jesse Manninen
+
+- [Github](https://github.com/jekku123)
+- [Instagram](https://www.instagram.com/jekku123/)
