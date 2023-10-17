@@ -88,54 +88,51 @@ export default function AuthForm({
             }
           }}
         >
-          {Object.keys(values).map((fieldname, i) => {
-            const type =
-              fieldname === "password"
-                ? "password"
-                : fieldname === "email"
-                ? "email"
-                : "text"
-
-            return (
-              <FormControl
-                key={fieldname}
-                margin="normal"
-                variant="outlined"
-                error={touched[fieldname] && Boolean(errors[fieldname])}
-                fullWidth
+          {Object.keys(values).map((fieldname, i) => (
+            <FormControl
+              key={fieldname}
+              margin="normal"
+              variant="outlined"
+              error={touched[fieldname] && Boolean(errors[fieldname])}
+              fullWidth
+            >
+              <InputLabel
+                htmlFor={fieldname}
+                sx={{
+                  textTransform: "capitalize",
+                  bgcolor: "background.paper",
+                  px: 1,
+                }}
               >
-                <InputLabel
-                  htmlFor={fieldname}
-                  sx={{
-                    textTransform: "capitalize",
-                    bgcolor: "background.paper",
-                    px: 1,
-                  }}
-                >
-                  {fieldname}
-                </InputLabel>
-                <OutlinedInput
-                  id={fieldname}
-                  key={fieldname}
-                  name={fieldname}
-                  type={type}
-                  value={values[fieldname]}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  autoFocus={i === 0 ? true : false}
-                  inputProps={{
-                    autoComplete: "new-password",
-                    form: {
-                      autoComplete: "off",
-                    },
-                  }}
-                />
-                <FormHelperText>
-                  <>{touched[fieldname] && errors[fieldname]}</>
-                </FormHelperText>
-              </FormControl>
-            )
-          })}
+                {fieldname}
+              </InputLabel>
+              <OutlinedInput
+                id={fieldname}
+                key={fieldname}
+                name={fieldname}
+                type={
+                  fieldname === "password"
+                    ? "password"
+                    : fieldname === "email"
+                    ? "email"
+                    : "text"
+                }
+                value={values[fieldname]}
+                onBlur={handleBlur}
+                onChange={handleChange}
+                autoFocus={i === 0 ? true : false}
+                inputProps={{
+                  autoComplete: "new-password",
+                  form: {
+                    autoComplete: "off",
+                  },
+                }}
+              />
+              <FormHelperText>
+                <>{touched[fieldname] && errors[fieldname]}</>
+              </FormHelperText>
+            </FormControl>
+          ))}
           <Button
             type="submit"
             variant="contained"
