@@ -6,11 +6,20 @@ import {
   Stack,
   TextField,
   Typography,
+  styled,
 } from "@mui/material"
 
 import { useState } from "react"
 import { useAuthState, useUpdateProfile } from "react-firebase-hooks/auth"
 import { auth } from "../firebase-config"
+
+const StyledPaper = styled(Paper)(() => ({
+  marginTop: "20px",
+  padding: "20px 30px 30px 30px",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+}))
 
 export default function Profile() {
   const [user] = useAuthState(auth)
@@ -31,16 +40,7 @@ export default function Profile() {
 
   return (
     <Container maxWidth="md">
-      <Paper
-        elevation={3}
-        sx={{
-          mt: "20px",
-          p: "20px 30px 30px 30px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
+      <StyledPaper elevation={3}>
         <Typography variant="h4" component="h2" gutterBottom>
           Profile
         </Typography>
@@ -109,7 +109,7 @@ export default function Profile() {
             </Stack>
           </>
         )}
-      </Paper>
+      </StyledPaper>
     </Container>
   )
 }
