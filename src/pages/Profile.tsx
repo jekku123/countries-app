@@ -41,6 +41,9 @@ export default function Profile() {
           alignItems: "center",
         }}
       >
+        <Typography variant="h4" component="h2" gutterBottom>
+          Profile
+        </Typography>
         {!isEdit ? (
           <>
             <Avatar

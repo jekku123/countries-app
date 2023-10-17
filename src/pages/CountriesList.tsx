@@ -57,10 +57,10 @@ export default function CountriesList() {
 
   return (
     <StyledContainer maxWidth="lg" sx={{ pt: 5 }}>
-      <Box marginBottom={isFavoritesPage ? 2 : 3}>
+      <Box marginBottom={isFavoritesPage ? 2 : 5}>
         <SearchSelect countries={countries} handleSearch={handleSearch} />
       </Box>
-      {isFavoritesPage && user && (
+      {isFavoritesPage && favorites.at(0) && (
         <Button
           onClick={removeFavorites}
           variant="contained"
