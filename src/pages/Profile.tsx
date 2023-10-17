@@ -24,7 +24,7 @@ const StyledPaper = styled(Paper)(() => ({
 export default function Profile() {
   const [user] = useAuthState(auth)
   const [photoURL, setPhotoURL] = useState("")
-  const [displayName, setDisplayname] = useState("")
+  const [displayName, setDisplayName] = useState("")
   const [isEdit, setIsEdit] = useState(false)
   const [updateProfile] = useUpdateProfile(auth)
 
@@ -83,7 +83,7 @@ export default function Profile() {
               sx={{ mt: 2 }}
             />
             <TextField
-              onChange={(e) => setDisplayname(e.target.value)}
+              onChange={(e) => setDisplayName(e.target.value)}
               label="Display name"
               placeholder={user?.displayName ?? ""}
               variant="outlined"

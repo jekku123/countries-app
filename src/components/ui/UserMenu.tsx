@@ -14,7 +14,7 @@ import { Link } from "react-router-dom"
 import { SignOutDialog } from "../"
 
 interface UserMenuProps {
-  user: User | null | undefined
+  readonly user: User | null | undefined
 }
 
 export default function UserMenu({ user }: UserMenuProps) {
