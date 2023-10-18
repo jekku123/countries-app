@@ -9,13 +9,12 @@ import { useSignOut } from "react-firebase-hooks/auth"
 import { useNavigate } from "react-router-dom"
 import { auth } from "../firebase-config"
 
-export default function LogoutDialog({
-  open,
-  setOpen,
-}: {
-  open: boolean
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
-}) {
+interface LogoutDialogProps {
+  readonly open: boolean
+  readonly setOpen: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export default function LogoutDialog({ open, setOpen }: LogoutDialogProps) {
   const [signOut] = useSignOut(auth)
   const navigate = useNavigate()
 

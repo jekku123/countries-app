@@ -48,11 +48,11 @@ type FormValues = {
 }
 
 interface AuthFormProps {
-  initialValues: FormValues
-  onSubmit: (values: FormValues) => Promise<void>
-  validationSchema?: any
-  loading: boolean
-  error: any
+  readonly initialValues: FormValues
+  readonly onSubmit: (values: FormValues) => Promise<void>
+  readonly validationSchema?: any
+  readonly loading: boolean
+  readonly error: any
 }
 
 export default function AuthForm({
@@ -120,7 +120,7 @@ export default function AuthForm({
                 value={values[fieldname]}
                 onBlur={handleBlur}
                 onChange={handleChange}
-                autoFocus={i === 0 ? true : false}
+                autoFocus={i === 0}
                 inputProps={{
                   autoComplete: "new-password",
                   form: {

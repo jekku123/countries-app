@@ -2,8 +2,8 @@ import { Box, Divider, Drawer, Stack, Typography } from "@mui/material"
 import NavLinks from "./NavLinks"
 
 interface MobileDrawerProps {
-  handleDrawerToggle: () => void
-  mobileOpen: boolean
+  readonly handleDrawerToggle: () => void
+  readonly mobileOpen: boolean
 }
 
 export default function MobileDrawer({

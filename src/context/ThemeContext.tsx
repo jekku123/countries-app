@@ -6,7 +6,7 @@ export const ThemeContext = createContext({ toggleColorMode: () => {} })
 export default function ThemeContextProvider({
   children,
 }: {
-  children: React.ReactNode
+  readonly children: React.ReactNode
 }) {
   const [mode, setMode] = useState<"light" | "dark">(
     localStorage.getItem("themeMode") === "dark" ? "dark" : "light",

@@ -4,8 +4,8 @@ import TextField from "@mui/material/TextField"
 import { ICountry } from "../../redux/services/countriesApi"
 
 interface SearchSelectProps {
-  countries?: ICountry[]
-  handleSearch: (
+  readonly countries?: ICountry[]
+  readonly handleSearch: (
     _e: React.SyntheticEvent<Element, Event>,
     value: string,
   ) => void

@@ -14,12 +14,12 @@ import { FavoriteType } from "../../redux/features/favoriteSlice"
 import { ICountry } from "../../redux/services/countriesApi"
 
 interface CountryCardProps {
-  country: ICountry
-  favorites: FavoriteType[]
-  handleFavoriteClick: (
+  readonly country: ICountry
+  readonly favorites: FavoriteType[]
+  readonly handleFavoriteClick: (
     countryname: string,
   ) => (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
-  handleCardClick: (
+  readonly handleCardClick: (
     country: ICountry,
   ) => (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }

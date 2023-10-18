@@ -31,7 +31,7 @@ export const countriesApi = createApi({
       query: () =>
         "all?fields=name,flags,population,capital,currencies,region,subregion,borders",
       transformResponse: (response: ICountry[]) => {
-        const sortedCountries = response.sort((a, b) =>
+        const sortedCountries = response.toSorted((a, b) =>
           a.name.common.localeCompare(b.name.common, "fi"),
         )
         return sortedCountries
