@@ -1,6 +1,6 @@
 import { Box, Container, Divider, Link, Typography } from "@mui/material"
 
-const links = ["https://restcountries.com/", "http://openweathermap.org/"]
+const links = ["https://restcountries.com/", "https://openweathermap.org/"]
 
 export default function Home() {
   return (
