@@ -1,7 +1,7 @@
 import Autocomplete from "@mui/material/Autocomplete"
 import Box from "@mui/material/Box"
 import TextField from "@mui/material/TextField"
-import { ICountry } from "../../redux/services/countriesApi"
+import { ICountry } from "../redux/services/countriesApi"
 
 interface SearchSelectProps {
   readonly countries?: ICountry[]

@@ -13,9 +13,9 @@ export type FavoritesState = {
   error: string | null
 }
 
-export const getFavorites = createAsyncThunk<FavoriteType[], string | null>(
+export const getFavorites = createAsyncThunk<FavoriteType[], string>(
   "favorites/getFavorites",
-  async (uid: string | null) => {
+  async (uid: string) => {
     if (!uid) return []
     const favorites = await getFavoritesFromDatabase(uid)
     return favorites

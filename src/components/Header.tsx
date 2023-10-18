@@ -15,8 +15,8 @@ import { Link } from "react-router-dom"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { ThemeToggler, UserMenu } from "."
 import { auth } from "../firebase-config"
-import MobileDrawer from "./ui/MobileDrawer"
-import NavLinks from "./ui/NavLinks"
+import MobileDrawer from "./MobileDrawer"
+import NavLinks from "./NavLinks"
 
 export default function Header() {
   const [user, loading] = useAuthState(auth)

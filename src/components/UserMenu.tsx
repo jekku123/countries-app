@@ -11,7 +11,7 @@ import {
 import { User } from "firebase/auth"
 import { useState } from "react"
 import { Link } from "react-router-dom"
-import { SignOutDialog } from "../"
+import { SignOutDialog } from "."
 
 interface UserMenuProps {
   readonly user: User | null | undefined

@@ -23,7 +23,7 @@ export default function ScrollTop() {
         onClick={handleClick}
         sx={{ position: "fixed", bottom: 16, right: 16 }}
       >
-        <Fab size="medium">
+        <Fab size="large">
           <KeyboardArrowUpIcon />
         </Fab>
       </Box>

@@ -34,7 +34,6 @@ export default function Register() {
 
   const onSubmit = async (values: { [key: string]: string }) => {
     const { name, email, password } = values
-
     const res = await createUserWithEmailAndPassword(email, password)
 
     if (!res) return
@@ -44,7 +43,6 @@ export default function Register() {
     await updateProfile(user, {
       displayName: name,
     })
-
     await addUserToDatabase(user, { name, email })
   }
 
