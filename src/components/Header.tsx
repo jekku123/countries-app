@@ -18,6 +18,11 @@ import { auth } from "../firebase-config"
 import MobileDrawer from "./MobileDrawer"
 import NavLinks from "./NavLinks"
 
+const toolBarStyles = {
+  display: "flex",
+  justifyContent: "space-between",
+}
+
 export default function Header() {
   const [user, loading] = useAuthState(auth)
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -30,12 +35,7 @@ export default function Header() {
     <header>
       <AppBar position="static">
         <Container>
-          <Toolbar
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
+          <Toolbar sx={toolBarStyles}>
             <Stack direction="row" alignItems="center">
               <IconButton
                 size="large"
@@ -63,6 +63,8 @@ export default function Header() {
               >
                 Countries App
               </Typography>
+            </Stack>
+            <Stack direction="row" gap="10px">
               <Box
                 sx={{
                   display: { xs: "none", md: "block" },
@@ -70,11 +72,10 @@ export default function Header() {
               >
                 <NavLinks />
               </Box>
-            </Stack>
-
-            <Stack direction="row" gap="10px">
-              <ThemeToggler />
-              {!loading ? <UserMenu user={user} /> : <CircularProgress />}
+              <Stack direction="row" alignItems="center" gap="10px">
+                <ThemeToggler />
+                {!loading ? <UserMenu user={user} /> : <CircularProgress />}
+              </Stack>
             </Stack>
           </Toolbar>
         </Container>

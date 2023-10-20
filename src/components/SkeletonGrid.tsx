@@ -1,19 +1,17 @@
-import { Grid, Skeleton } from "@mui/material"
+import { Skeleton, Stack } from "@mui/material"
 
 export default function SkeletonGrid() {
   return (
-    <Grid container spacing={5} px="20px">
+    <Stack direction="row" justifyContent="center" flexWrap="wrap" gap={5}>
       {Array.from(Array(6)).map((_, i) => (
-        <Grid key={i} item xs={12} sm={6} md={4}>
-          <Skeleton
-            sx={{ borderRadius: "5px" }}
-            variant="rectangular"
-            width="100%"
-            height={"20rem"}
-            animation="wave"
-          />
-        </Grid>
+        <Skeleton
+          sx={{ borderRadius: "5px" }}
+          variant="rectangular"
+          width="300px"
+          height="325px"
+          animation="wave"
+        />
       ))}
-    </Grid>
+    </Stack>
   )
 }

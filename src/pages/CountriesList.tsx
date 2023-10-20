@@ -1,10 +1,11 @@
-import { Box, Button, Container, Grid, styled } from "@mui/material"
+import { Box, Button, Container, Stack, styled } from "@mui/material"
 import { useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { useLocation, useNavigate } from "react-router-dom"
 import { CountryCard, SearchSelect, SkeletonGrid } from "../components"
 import { auth } from "../firebase-config"
 import useFavorites from "../hooks/useFavorites"
+import { FavoriteType } from "../redux/features/favoriteSlice"
 import { ICountry, useGetCountriesQuery } from "../redux/services/countriesApi"
 
 const StyledContainer = styled(Container)(() => ({
@@ -32,7 +33,8 @@ export default function CountriesList() {
   const countries = isFavoritesPage
     ? data?.filter((country: ICountry) =>
         favorites?.some(
-          (favorite) => favorite.countryName === country.name.common,
+          (favorite: FavoriteType) =>
+            favorite.countryName === country.name.common,
         ),
       )
     : data
@@ -71,34 +73,25 @@ export default function CountriesList() {
       ) : isLoading || favLoading ? (
         <SkeletonGrid />
       ) : (
-        <Grid container spacing={5} px="20px" justifyContent={"center"}>
+        <Stack direction="row" justifyContent="center" flexWrap="wrap" gap={5}>
           {countries?.reduce(
             (prevCountries: JSX.Element[], country: ICountry) =>
               country.name?.common?.toLowerCase().includes(search.toLowerCase())
                 ? [
                     ...prevCountries,
-                    <Grid
-                      key={country.name.common}
-                      item
-                      xs={12}
-                      sm={6}
-                      md={4}
-                      xl={3}
-                    >
-                      <CountryCard
-                        {...{
-                          country,
-                          favorites,
-                          handleCardClick,
-                          handleFavoriteClick,
-                        }}
-                      />
-                    </Grid>,
+                    <CountryCard
+                      {...{
+                        country,
+                        favorites,
+                        handleCardClick,
+                        handleFavoriteClick,
+                      }}
+                    />,
                   ]
                 : prevCountries,
             [],
           )}
-        </Grid>
+        </Stack>
       )}
     </StyledContainer>
   )

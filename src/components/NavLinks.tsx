@@ -25,12 +25,7 @@ export default function NavLinks() {
   const { pathname } = useLocation()
 
   return (
-    <List
-      sx={{
-        display: "flex",
-        flexDirection: { xs: "column", sm: "row" },
-      }}
-    >
+    <List sx={listStyle}>
       {navLinks.map((item) => (
         <ListItem key={item.label} disablePadding>
           <ListItemButton

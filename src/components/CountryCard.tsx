@@ -32,8 +32,8 @@ const StyledBox = styled(Box)(() => ({
 }))
 
 const imageStyle = {
-  height: "12rem",
-  width: "100%",
+  height: "165px",
+  width: "300px",
   objectFit: "fill",
 }
 
@@ -70,7 +70,7 @@ export default function CountryCard({
           </StyledBox>
           <StyledBox>
             <People />
-            <Typography variant="body1" component="p">
+            <Typography variant="body1" component="span">
               {country.population > 0
                 ? country.population.toLocaleString()
                 : "No population"}
@@ -78,14 +78,14 @@ export default function CountryCard({
           </StyledBox>
           <StyledBox>
             <LocationCity />
-            <Typography variant="body1" component="p">
+            <Typography variant="body1" component="span">
               {country.capital?.[0] ?? "No capital"}
             </Typography>
           </StyledBox>
 
           <StyledBox>
             <CreditCard />
-            <Typography variant="body1" component="p">
+            <Typography variant="body1" component="span">
               {Object.keys(country.currencies).at(0)
                 ? Object.keys(country.currencies)
                     .map(
