@@ -61,9 +61,6 @@ export default function Profile() {
             <Typography component="p" variant="body1" gutterBottom>
               {user?.email}
             </Typography>
-            <Typography component="p" variant="body1">
-              {user?.phoneNumber}
-            </Typography>
             <Button
               onClick={() => setIsEdit(true)}
               variant="contained"
