@@ -15,6 +15,6 @@ FROM nginx:1.23-alpine as production
 WORKDIR /usr/share/nginx/html
 RUN rm -rf *
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=build /usr/src/app/dist/ .
+COPY --from=build /usr/src/app/build/ .
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
