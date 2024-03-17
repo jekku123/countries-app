@@ -2,6 +2,8 @@
 
 Countries app is a simple app that shows information about countries. It uses [REST Countries API](https://restcountries.eu/) to get information about countries and [Open Weather Map](https://api.openweathermap.org/) to get the weather information.
 
+Hosted at Firebase: [Countries App](https://countries-app-1.web.app/)
+
 ## Features
 
 - Search countries by name
