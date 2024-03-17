@@ -1,8 +1,10 @@
-# Countries App [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jekku123_countries-app&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=jekku123_countries-app)
+# Countries App [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jekku123_countries-app&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=jekku123_countries-app) [![Deployed to firebase](https://github.com/jekku123/countries-app/actions/workflows/firebase-hosting-merge.yml/badge.svg)](https://github.com/jekku123/countries-app/actions/workflows/firebase-hosting-merge.yml)
 
 Countries app is a simple app that shows information about countries. It uses [REST Countries API](https://restcountries.eu/) to get information about countries and [Open Weather Map](https://api.openweathermap.org/) to get the weather information.
 
-Hosted at Firebase: [Countries App](https://countries-app-1.web.app/)
+Hosted at Firebase
+
+Live site: [Countries App](https://countries-app-d0f36.firebaseapp.com/)
 
 ## Features
 
