@@ -27,7 +27,7 @@ jobs:
       - name: Delete Old Container
         run: docker rm -f countries-app-container
       - name: Run docker container
-        run: docker run -d -p 5173:80 \
+        run: docker run -d -p 5173:80 --name countries-app-container \
           -e VITE_OPENWEATHER_KEY=${{ secrets.VITE_OPENWEATHER_KEY }} \
           -e VITE_OPENWEATHER_URL=${{ secrets.VITE_OPENWEATHER_URL }} \
           -e VITE_FIREBASE_API_KEY=${{ secrets.VITE_FIREBASE_API_KEY }} \
@@ -37,4 +37,4 @@ jobs:
           -e VITE_FIREBASE_MESSAGING_SENDER_ID=${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }} \
           -e VITE_FIREBASE_APP_ID=${{ secrets.VITE_FIREBASE_APP_ID }} \
           -e VITE_GOOGLE_MAPS_KEY=${{ secrets.VITE_GOOGLE_MAPS_KEY }} \
-          --name countries-app-container jekku123/countries-app
+          jekku123/countries-app
