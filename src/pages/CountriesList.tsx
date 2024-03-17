@@ -80,6 +80,7 @@ export default function CountriesList() {
                 ? [
                     ...prevCountries,
                     <CountryCard
+                      key={country.name.common}
                       {...{
                         country,
                         favorites,
